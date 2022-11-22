@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import {Grid} from "@mui/material";
 
-export default function Library() {
+export default function Card() {
     return (
         <Grid>
-            Library
+            Card
         </Grid>
     )
 }

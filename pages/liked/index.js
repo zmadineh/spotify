@@ -1,9 +1,10 @@
 import {Grid} from "@mui/material";
 
-export default function Library() {
+
+export default function Liked() {
     return (
         <Grid>
-            Library
+            Liked
         </Grid>
     )
 }
