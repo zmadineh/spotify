@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import Typography from "@mui/material/Typography";
 
 
-export default function Sidebar() {
+export default function Sidebar({sidebarWidth}) {
 
     const [selectedItem, setSelectedItem] = useState('home');
 
@@ -21,7 +21,7 @@ export default function Sidebar() {
     };
 
     return (
-        <Grid bgcolor={'background.default'} color={"text.secondary"} width={'250px'} minheight={'100vh'} height={'100%'} p={3} position={"fixed"} top={0} left={0}>
+        <Grid bgcolor={'background.default'} color={"text.secondary"} width={sidebarWidth} minheight={'100vh'} height={'100%'} p={3} position={"fixed"} top={0} left={0}>
             <Image src={spotifyLogo} alt={'spotify-icon'} px={1}/>
 
             <Box sx={{ width: '100%'}} mt={2}>

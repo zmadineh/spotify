@@ -14,10 +14,10 @@ export default function Layout({ children }) {
             </Grid>
 
             <Grid item container>
-                <Grid item >
-                    <Sidebar />
+                <Grid container item >
+                    <Sidebar sidebarWidth={sidebarWidth}/>
                 </Grid>
-                <Grid item ml={`${sidebarWidth}px`} mt={`${navbarHeight}px`} width={'100%'} height={'100%'}>
+                <Grid container item ml={`${sidebarWidth}px`} mt={`${navbarHeight}px`} width={ `calc(100% - ${sidebarWidth}px)`} height={'100%'}>
                     {children}
                 </Grid>
             </Grid>

@@ -87,9 +87,9 @@ export const theme = createTheme({
 
         background: {
             default:'#000000',
-            secondary: '#181818',
+            secondary: '#161616',
             lighter: '#FFFFFF1A',
-            mainGradient: "linear-gradient(0deg, #121212, #1E1E1E)",
+            mainGradient: "linear-gradient(180deg, #1E1E1E, #000000)",
         },
     },
 
