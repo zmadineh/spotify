@@ -18,7 +18,7 @@ export default function CardsList({categoryId}) {
                     <Grid item container>
                         <Typography variant={'h3'} color={'text.primary'}>{category.title}</Typography>
                     </Grid>
-                    <Grid item container flexDirection={"column"} overflow={"scroll"} height={'35vh'} gap={2}>
+                    <Grid item container flexDirection={"column"} alignContent={"flex-start"} overflow={"scroll"} height={'35vh'} gap={2}>
                         {
                             playlists.map(playlist => (
                                 <PlaylistCard playlistId={playlist.id}/>
