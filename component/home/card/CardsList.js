@@ -3,8 +3,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {getCategoryById, getPlaylistsByCategory} from "../../../helper/getData";
 import PlaylistCard from "./PlaylistCard";
-import {Paper} from "@mui/material";
-import List from "@mui/material/List";
+
 
 export default function CardsList({categoryId}) {
 
