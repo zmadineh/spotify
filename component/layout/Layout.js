@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 
 const sidebarWidth = 250;
 const navbarHeight = 70;
+const footerHeight = 75;
 
 export default function Layout({ children }) {
     return (
@@ -17,7 +18,8 @@ export default function Layout({ children }) {
                 <Grid container item >
                     <Sidebar sidebarWidth={sidebarWidth}/>
                 </Grid>
-                <Grid container item ml={`${sidebarWidth}px`} mt={`${navbarHeight}px`} width={ `calc(100% - ${sidebarWidth}px)`} height={'100%'}>
+                <Grid container item ml={`${sidebarWidth}px`}
+                      width={ `calc(100% - ${sidebarWidth}px)`} minHeight={'100%'}>
                     {children}
                 </Grid>
             </Grid>

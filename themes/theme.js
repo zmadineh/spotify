@@ -7,6 +7,7 @@ export const theme = createTheme({
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
+                    backgroundColor: '#000000',
                     scrollbarColor: "#6b6b6b #2b2b2b",
                     "&::-webkit-scrollbar" : {
                         backgroundColor: "#2b2b2b",
@@ -46,7 +47,7 @@ export const theme = createTheme({
                     color: "inherit",
                 },
                 'a:hover' : {
-                    textDecoration: 'underline',
+                    // textDecoration: 'underline',
                 },
             },
         },
@@ -57,6 +58,9 @@ export const theme = createTheme({
                     padding: "12px 24px",
                     borderRadius: '50px',
                 },
+                '& root::hover': {
+                    textDecoration: "underline",
+                }
             },
         },
     },
@@ -80,6 +84,7 @@ export const theme = createTheme({
         secondary: {
             main: '#FFFFFF',
             light: '#FFFFFFB3',
+            lighter: '#00000026',
             mainGradient:  "linear-gradient(180deg,, #000000, #90AEA7)",
         },
         error: {
