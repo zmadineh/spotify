@@ -10,30 +10,40 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 
 import TableHeaderCell from "../track/TableHeaderCell";
 import FlexCell from "../track/FlexCell";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import TrackCard from "../track/TrackCard";
+import {handleLike, handlePlay} from "../../redux/slices/tracks.slice";
 
 
 export default function TrackTable ({playlistId}) {
 
     const trackData = useSelector((state) => state.tracks.data);
-    const trackLoading = useSelector((state) => state.tracks.isReceived);
     const dispatch = useDispatch();
 
-    // console.log(trackData)
     const tracks = getTracksByPlaylist(trackData, playlistId);
 
     const [displayFavIcon, setDisplayFavIcon] = useState(false);
 
-    const handleMusicClicked = id => {
-        // trackData.map(track => {
-        //     if (track.id === id)
-        //         track.favorite = true
-        // });
+    const handleMusicClicked = track => {
+        dispatch(handlePlay(track))
+    }
+
+    const handleLikeClicked = track => {
+        dispatch(handleLike(track))
+    }
+
+    const handlePausePlayIcon = (track) => {
+        if(track.playing)
+            return <PlayArrowIcon />
+        else if (track.pause)
+            return <PauseIcon />
+        else return track.id
     }
 
     return (
@@ -67,17 +77,18 @@ export default function TrackTable ({playlistId}) {
                             onMouseEnter={() => setDisplayFavIcon(true)}
                             onMouseLeave={() => setDisplayFavIcon(false)}
                         >
-                            <TableCell component="th" scope="row" align="center">{track.id}</TableCell>
+                            <TableCell component="th" scope="row" align="center">{handlePausePlayIcon(track)}</TableCell>
                             <TableCell component="th" scope="row"
-                                       onClick={() => handleMusicClicked(track.id)}
+                                       onClick={() => handleMusicClicked(track)}
                             >
                                 <TrackCard track={track} />
                             </TableCell>
                             <TableCell component="th" scope="row" align="left">{track.album}</TableCell>
                             <TableCell component="th" scope="row" align="left">{track.date}</TableCell>
 
-                            <TableCell component="th" scope="row" align="right">
-                                {displayFavIcon &&
+                            <TableCell component="th" scope="row" align="right"
+                                       onClick={() => handleLikeClicked(track)}>
+                                {(displayFavIcon || track.favorite) &&
                                     (track.favorite ? <FavoriteIcon color={"error"}/> : <FavoriteBorderIcon color={'inherit'}/>)
                                 }
                             </TableCell>

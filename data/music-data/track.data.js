@@ -20,6 +20,8 @@ export const trackData =
             time: '3:49',
             image: todayTopHitImg,
             favorite: false,
+            playing: false,
+            pause: false,
         },
         {
             id: 2,
@@ -32,6 +34,8 @@ export const trackData =
             time: '4:19',
             image: feelinGoodImg,
             favorite: false,
+            playing: false,
+            pause: false,
         },
         {
             id: 3,
@@ -44,5 +48,7 @@ export const trackData =
             time: '3:55',
             image: peacefulPianoImg,
             favorite: false,
+            playing: false,
+            pause: false,
         },
     ];
