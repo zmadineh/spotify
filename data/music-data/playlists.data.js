@@ -1,11 +1,11 @@
-import todayTopHitImg from '../../public/image/song-image/today-top-hit.jpg';
-import rapCaviarImg from '../../public/image/song-image/rap-caviar.jpg';
-import moodBoosterImg from '../../public/image/song-image/mood-booster.jpg';
-import feelinGoodImg from '../../public/image/song-image/feelin-good.jpg';
-import sadHourImg from '../../public/image/song-image/sad-hour.jpg';
-import peacefulPianoImg from '../../public/image/song-image/peaceful-piano.jpg';
-import deepFocusImg from '../../public/image/song-image/deep-focus.jpg';
-import instrumentalStudyImg from '../../public/image/song-image/instrumental-study.jpg';
+import todayTopHitImg from '../../public/image/track-image/today-top-hit.jpg';
+import rapCaviarImg from '../../public/image/track-image/rap-caviar.jpg';
+import moodBoosterImg from '../../public/image/track-image/mood-booster.jpg';
+import feelinGoodImg from '../../public/image/track-image/feelin-good.jpg';
+import sadHourImg from '../../public/image/track-image/sad-hour.jpg';
+import peacefulPianoImg from '../../public/image/track-image/peaceful-piano.jpg';
+import deepFocusImg from '../../public/image/track-image/deep-focus.jpg';
+import instrumentalStudyImg from '../../public/image/track-image/instrumental-study.jpg';
 
 export const playlistsData =
     [
@@ -16,7 +16,7 @@ export const playlistsData =
             title: "Today's Top Hit",
             information: 'The hottest tracks in the United States',
             image: todayTopHitImg,
-            imagePath: '/image/song-image/today-top-hit.jpg',
+            imagePath: '/image/track-image/today-top-hit.jpg',
         },
         {
             id: 2,
@@ -25,7 +25,7 @@ export const playlistsData =
             title: 'RapCaviar',
             information: 'The hottest tracks in the United States',
             image: rapCaviarImg,
-            imagePath: '/image/song-image/rap-caviar.jpg',
+            imagePath: '/image/track-image/rap-caviar.jpg',
         },
         {
             id: 3,
@@ -34,7 +34,7 @@ export const playlistsData =
             title: 'Mood Booster',
             information: 'Get happy with today\'s does of feel-good songs!',
             image: moodBoosterImg,
-            imagePath: '/image/song-image/mood-booster.jpg',
+            imagePath: '/image/track-image/mood-booster.jpg',
         },
         {
             id: 4,
@@ -43,7 +43,7 @@ export const playlistsData =
             title: "Feelin\'Good",
             information: 'Feel good with this positively timeless playlists!',
             image: feelinGoodImg,
-            imagePath: '/image/song-image/feelin-good.jpg',
+            imagePath: '/image/track-image/feelin-good.jpg',
         },
         {
             id: 5,
@@ -52,7 +52,7 @@ export const playlistsData =
             title: 'Sad hour',
             information: 'Somehow heartbreak feels good in a place like this',
             image: sadHourImg,
-            imagePath: '/image/song-image/sad-hour.jpg',
+            imagePath: '/image/track-image/sad-hour.jpg',
         },
         {
             id: 6,
@@ -61,7 +61,7 @@ export const playlistsData =
             title: 'Peaceful Piano',
             information: 'Relax and indulge with beautiful piano pieces',
             image: peacefulPianoImg,
-            imagePath: '/image/song-image/peaceful-piano.jpg',
+            imagePath: '/image/track-image/peaceful-piano.jpg',
         },
         {
             id: 7,
@@ -70,7 +70,7 @@ export const playlistsData =
             title: 'Deep Focus',
             information: 'Keep calm and focus with ambient and post-rock',
             image: deepFocusImg,
-            imagePath: '/image/song-image/deep-focus.jpg',
+            imagePath: '/image/track-image/deep-focus.jpg',
         },
         {
             id: 8,
@@ -79,6 +79,6 @@ export const playlistsData =
             title: 'Instrumental Study',
             information: 'Focus with soft study music in the background',
             image: instrumentalStudyImg,
-            imagePath: '/image/song-image/instrumental-study.jpg',
+            imagePath: '/image/track-image/instrumental-study.jpg',
         },
     ];

@@ -7,11 +7,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardActionArea } from '@mui/material';
 import {useRouter} from "next/router";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function PlaylistCard ({playlistId}) {
 
     const router = useRouter();
-    const playlist = getPlaylistById(playlistId);
+    const playlistsData = useSelector((state) => state.playlists.data);
+    const playlistsLoading = useSelector((state) => state.playlists.isReceived);
+    const dispatch = useDispatch();
+
+    const playlist = getPlaylistById(playlistsData, playlistId);
 
     return (
         <Card

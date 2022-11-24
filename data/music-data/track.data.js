@@ -1,13 +1,13 @@
-import todayTopHitImg from '../../public/image/song-image/today-top-hit.jpg';
-import rapCaviarImg from '../../public/image/song-image/rap-caviar.jpg';
-import moodBoosterImg from '../../public/image/song-image/mood-booster.jpg';
-import feelinGoodImg from '../../public/image/song-image/feelin-good.jpg';
-import sadHourImg from '../../public/image/song-image/sad-hour.jpg';
-import peacefulPianoImg from '../../public/image/song-image/peaceful-piano.jpg';
-import deepFocusImg from '../../public/image/song-image/deep-focus.jpg';
-import instrumentalStudyImg from '../../public/image/song-image/instrumental-study.jpg';
+import todayTopHitImg from '../../public/image/track-image/today-top-hit.jpg';
+import rapCaviarImg from '../../public/image/track-image/rap-caviar.jpg';
+import moodBoosterImg from '../../public/image/track-image/mood-booster.jpg';
+import feelinGoodImg from '../../public/image/track-image/feelin-good.jpg';
+import sadHourImg from '../../public/image/track-image/sad-hour.jpg';
+import peacefulPianoImg from '../../public/image/track-image/peaceful-piano.jpg';
+import deepFocusImg from '../../public/image/track-image/deep-focus.jpg';
+import instrumentalStudyImg from '../../public/image/track-image/instrumental-study.jpg';
 
-export const songData =
+export const trackData =
     [
         {
             id: 1,

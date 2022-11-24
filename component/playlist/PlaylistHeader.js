@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import CardImage from "./CardImage";
 
-export default function PlaylistCard ({playlist}) {
+export default function PlaylistHeader ({playlist}) {
 
     return (
         <Grid container height={'35vh'} alignItems={"flex-end"} spacing={3} pl={3}>

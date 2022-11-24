@@ -9,7 +9,7 @@ export default function Home() {
         <MainContentGrid item container flexDirection={'column'} color={'text.primary'} p={2} gap={10} sx={{marginTop: '70px', marginBottom: '75px'}}>
             {
                 categories.map(category => (
-                    <CardsList categoryId={category.id} />
+                    <CardsList key={category.id} categoryId={category.id} />
                 ))
             }
         </MainContentGrid>

@@ -1,4 +1,4 @@
-import {getSongByPlaylist} from "../../helper/getData";
+import {getTracksByPlaylist} from "../../helper/getData";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,27 +8,32 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import SongCard from "../song/SongCard";
-import TableHeaderCell from "../song/TableHeaderCell";
-import FlexCell from "../song/FlexCell";
-import {useState} from "react";
-import {songData} from "../../data/songs/song.data";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
+import TableHeaderCell from "../track/TableHeaderCell";
+import FlexCell from "../track/FlexCell";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import TrackCard from "../track/TrackCard";
 
 
-export default function SongTable ({playlistId}) {
+export default function TrackTable ({playlistId}) {
 
-    const songs = getSongByPlaylist(playlistId);
+    const trackData = useSelector((state) => state.tracks.data);
+    const trackLoading = useSelector((state) => state.tracks.isReceived);
+    const dispatch = useDispatch();
+
+    // console.log(trackData)
+    const tracks = getTracksByPlaylist(trackData, playlistId);
 
     const [displayFavIcon, setDisplayFavIcon] = useState(false);
 
     const handleMusicClicked = id => {
-        songData.map(song => {
-            if (song.id === id)
-                song.favorite = true
-        });
+        // trackData.map(track => {
+        //     if (track.id === id)
+        //         track.favorite = true
+        // });
     }
 
     return (
@@ -38,8 +43,10 @@ export default function SongTable ({playlistId}) {
                     <col style={{width:'4%'}}/>
                     <col style={{width:'36%'}}/>
                     <col style={{width:'25%'}}/>
-                    <col style={{width:'25%'}}/>
-                    <col style={{width:'10%'}}/>
+                    <col style={{width:'26%'}}/>
+                    <col style={{width:'3%'}}/>
+                    <col style={{width:'3%'}}/>
+                    <col style={{width:'3%'}}/>
                 </colgroup>
                 <TableHead>
                     <TableRow>
@@ -47,33 +54,36 @@ export default function SongTable ({playlistId}) {
                         <TableCell><TableHeaderCell>TITLE</TableHeaderCell></TableCell>
                         <TableCell><TableHeaderCell>ALBUM</TableHeaderCell></TableCell>
                         <TableCell><TableHeaderCell>DATE ADDED</TableHeaderCell></TableCell>
+                        <TableCell align="center"></TableCell>
                         <TableCell align="center"><TableHeaderCell><AccessTimeIcon /></TableHeaderCell></TableCell>
+                        <TableCell align="center"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {songs.map((song) => (
+                    {tracks.map((track) => (
                         <TableRow
-                            key={song.id}
+                            key={track.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 }, "&:hover" : {backgroundColor: '#59595933'}, cursor: "pointer" }}
                             onMouseEnter={() => setDisplayFavIcon(true)}
                             onMouseLeave={() => setDisplayFavIcon(false)}
                         >
-                            <TableCell component="th" scope="row" align="center">{song.id}</TableCell>
+                            <TableCell component="th" scope="row" align="center">{track.id}</TableCell>
                             <TableCell component="th" scope="row"
-                                       onClick={() => handleMusicClicked(song.id)}
+                                       onClick={() => handleMusicClicked(track.id)}
                             >
-                                <SongCard song={song} />
+                                <TrackCard track={track} />
                             </TableCell>
-                            <TableCell component="th" scope="row" align="left">{song.album}</TableCell>
-                            <TableCell component="th" scope="row" align="left">{song.date}</TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                <FlexCell>
-                                    {displayFavIcon &&
-                                        (song.favorite ? <FavoriteIcon color={"error"}/> : <FavoriteBorderIcon color={'inherit'}/>)
-                                    }
-                                    {song.time} <MoreHorizIcon />
-                                </FlexCell>
+                            <TableCell component="th" scope="row" align="left">{track.album}</TableCell>
+                            <TableCell component="th" scope="row" align="left">{track.date}</TableCell>
+
+                            <TableCell component="th" scope="row" align="right">
+                                {displayFavIcon &&
+                                    (track.favorite ? <FavoriteIcon color={"error"}/> : <FavoriteBorderIcon color={'inherit'}/>)
+                                }
                             </TableCell>
+                            <TableCell component="th" scope="row" align="center">{track.time}</TableCell>
+                            <TableCell component="th" scope="row" align="left"><MoreHorizIcon /></TableCell>
+
                         </TableRow>
                     ))}
                 </TableBody>

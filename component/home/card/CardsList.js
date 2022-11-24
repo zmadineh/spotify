@@ -1,15 +1,21 @@
 import Link from 'next/link';
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import {getCategoryById, getPlaylistsByCategory} from "../../../helper/getData";
+import {getCategoryById, getPlaylistById, getPlaylistsByCategory} from "../../../helper/getData";
 import PlaylistCard from "./PlaylistCard";
 import Button from "@mui/material/Button";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export default function CardsList({categoryId}) {
 
     const category = getCategoryById(categoryId);
-    const playlists  = getPlaylistsByCategory(categoryId);
+
+    const playlistsData = useSelector((state) => state.playlists.data);
+    const playlistsLoading = useSelector((state) => state.playlists.isReceived);
+    const dispatch = useDispatch();
+
+    const playlists = getPlaylistsByCategory(playlistsData, categoryId);
 
     return (
         <Grid>
