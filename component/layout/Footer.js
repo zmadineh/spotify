@@ -15,7 +15,7 @@ export default function Footer({ children }) {
 
             </Grid>
             <Grid>
-                
+
             </Grid>
         </Grid>
     )
