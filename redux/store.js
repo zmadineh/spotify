@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import playlistsSlice from "./slices/playlists.slice";
-import tracksSlice from "./slices/tracks.slice";
+// import playlistsSlice from "./slices/playlists.slice";
+// import tracksSlice from "./slices/musics.slice";
+import musicsSlice from "./slices/musics.slice";
 // import {cryptoApi} from "./features/api/cryptoApi";
 
 
@@ -23,8 +24,9 @@ import tracksSlice from "./slices/tracks.slice";
 
 const store = configureStore({
     reducer: {
-        playlists: playlistsSlice,
-        tracks: tracksSlice,
+        musics: musicsSlice,
+        // playlists: playlistsSlice,
+        // tracks: tracksSlice,
         // [cryptoApi.reducerPath] : cryptoApi.reducer
     },
     // reducer: persistedReducer,

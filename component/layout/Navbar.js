@@ -13,7 +13,7 @@ export default function Navbar({decreaseWidth}) {
     const [display, setDisplay] = useState(false);
 
     useEffect(() => {
-        setDisplay(router.pathname.includes('playlist'))
+        setDisplay(router.pathname.includes('music'))
     },[router])
     // console.log(display)
 
@@ -21,10 +21,10 @@ export default function Navbar({decreaseWidth}) {
     return (
         <Grid container justifyContent={"space-around"} alignItems={"center"}
               position={"fixed"} top={0} left={250} p={1}
-              bgcolor={'background.default'}
+              // bgcolor={'background.default'}
               height={'70px'} width={ `calc(100% - ${decreaseWidth}px)`}
               zIndex={2000}
-              sx={{display: display ? 'none' : 'flex'}}
+              sx={{backgroundColor: display ? 'background.navbarWithOpacity' : 'background.default'}}
         >
             <Grid item xs={6} gap={1}>
                 <IconButton sx={{backgroundColor: 'primary.main', color: 'primary.lighter'}}> <ArrowBackIosIcon /> </IconButton>

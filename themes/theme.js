@@ -125,6 +125,7 @@ export const theme = createTheme({
             default:'#000000',
             secondary: '#161616',
             lighter: '#FFFFFF1A',
+            navbarWithOpacity: '#16161666',
             mainGradient: "linear-gradient(180deg, #1E1E1E, #000000)",
         },
     },
@@ -152,7 +153,7 @@ export const theme = createTheme({
             lineHeight: "38px",
         },
         h4: {
-            fontSize: "16px",
+            fontSize: "15px",
             fontWeight: 700,
             lineHeight: "24px",
         },

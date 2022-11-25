@@ -6,7 +6,7 @@ export default function Home() {
     const categories = getCategories();
 
     return (
-        <MainContentGrid item container flexDirection={'column'} color={'text.primary'} p={2} gap={10} sx={{marginTop: '70px', marginBottom: '75px'}}>
+        <MainContentGrid item container flexDirection={'column'} color={'text.primary'} p={2} gap={2} sx={{marginTop: '70px', marginBottom: '80px'}}>
             {
                 categories.map(category => (
                     <CardsList key={category.id} categoryId={category.id} />
