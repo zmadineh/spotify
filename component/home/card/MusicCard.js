@@ -18,8 +18,8 @@ export default function MusicCard ({music, type}) {
             onClick={() => router.push(`musics/${type}/${music.id}`)}
         >
             <CardActionArea>
-                <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} height={'180px'}>
-                    <Image src={music.image} style={{width: '160px', height: '160px', borderRadius: '6px'}} />
+                <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} height={'180px'} p={1}>
+                    <Image src={music.image} style={{width: '160px', height: '160px', borderRadius: (type === 'playlist' ? '6px' : '50%')}} />
                 </Grid>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

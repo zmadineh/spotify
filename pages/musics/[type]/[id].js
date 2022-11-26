@@ -8,7 +8,7 @@ import MusicPageHeader from "../../../component/playlist/MusicPageHeader";
 import ActionCard from "../../../component/playlist/ActionCard";
 
 import Grid from "@mui/material/Grid";
-import TrackTable from "../../../component/playlist/TrackTable";
+import TrackTable from "../../../component/track/TrackTable";
 import {useDispatch, useSelector} from "react-redux";
 
 

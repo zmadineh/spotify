@@ -52,6 +52,7 @@ export const theme = createTheme({
             },
         },
 
+
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -113,7 +114,7 @@ export const theme = createTheme({
             secondary: '#FFFFFFB3',
         },
         action: {
-            disabledBackground: '#6c759624',
+            disabledBackground: '#727272',
             selected: '#00000014',
         },
 
@@ -126,6 +127,7 @@ export const theme = createTheme({
             secondary: '#161616',
             lighter: '#FFFFFF1A',
             navbarWithOpacity: '#16161666',
+            tableRowHover: '#59595933',
             mainGradient: "linear-gradient(180deg, #1E1E1E, #000000)",
         },
     },

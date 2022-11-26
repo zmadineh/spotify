@@ -8,7 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {useState} from "react";
 import PlayPauseAction from "../common/PlayPauseAction";
 import {useDispatch} from "react-redux";
-import {handlePlay, addRecent} from "../../redux/slices/musics.slice";
+import {handlePlay, addRecent, handleLike} from "../../redux/slices/musics.slice";
 
 export default function ActionCard ({music}) {
 
@@ -19,12 +19,18 @@ export default function ActionCard ({music}) {
         dispatch(addRecent(music))
     }
 
+    const handleLikeClick = () => {
+        dispatch(handleLike(music))
+    }
+
     return (
-        <Grid container height={'100px'} gap={2} p={3}>
+        <Grid container gap={2} p={3}>
             <PlayPauseAction color={"success.main"} onClick={handlePlayMusic}>
                 { music.playing ? <PauseIcon color={"primary"}/> : <PlayArrowIcon  color={"primary"}/> }
             </PlayPauseAction>
-            <IconButton sx={{color: "secondary.light"}}>{music.favorite ? <FavoriteIcon color={"success"}/> : <FavoriteBorderIcon color={'inherit'}/>}</IconButton>
+            <IconButton sx={{color: "secondary.light"}} onClick={handleLikeClick}>
+                {music.favorite ? <FavoriteIcon color={"success"}/> : <FavoriteBorderIcon color={'inherit'}/>}
+            </IconButton>
             <IconButton sx={{color: "secondary.light"}}><MoreHorizIcon /></IconButton>
         </Grid>
     )

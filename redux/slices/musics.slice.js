@@ -2,31 +2,15 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {trackData} from "../../data/music-data/track.data";
 import {playlistsData} from "../../data/music-data/playlists.data";
 
-// const prevHandler = (data) => {
-//     const prevPlayingTrackId = data.playing.playingTrackId;
-//     const prevPlayingPlaylistId = data.playing.playingPlaylistId;
-//     const prevTrack = data.track.find(track => track.id === prevPlayingTrackId)
-//     const prevPlaylist = data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
-//     if (prevTrack) {
-//         prevTrack.playing = false;
-//         prevTrack.pause = false;
-//     }
-//     if (prevPlaylist) {
-//         prevPlaylist.playing = false;
-//         prevPlaylist.pause = false;
-//     }
-//     return data;
-// }
-
 const playingData = {
     playlist: 1, // playlist id
     track: 1, // track id
 }
 
 const recentlyPlayed = [
-    {type: 'track', id: 1},
+    trackData[0],
+    // {type: 'track', id: 1},
 ]
-
 
 const initialState = {
     isReceived: false,
@@ -36,7 +20,7 @@ const initialState = {
         track: trackData,
         playlist: playlistsData,
         recentlyPlayed: recentlyPlayed,
-        playing: playingData
+        playing: playingData,
     }
 }
 
@@ -55,6 +39,17 @@ const musicsSlice = createSlice({
             }
         },
         handlePlay: (state, action) => {
+
+            // add to recently played
+            const recentData = action.payload
+            const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
+            console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
+            if (repeatedDataIndex !== -1){
+                state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            }
+            state.data.recentlyPlayed.unshift(recentData)
+
+            // toggle play track or playlist
             const type = action.payload.type;
             const payload = action.payload;
             const newData = state.data[type].find(item => item.id === payload.id)
@@ -127,12 +122,13 @@ const musicsSlice = createSlice({
         },
 
         addRecent: (state, action) => {
-            const recentData = {type: action.payload.type, id: action.payload.id}
-            const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item === recentData)
-            if (repeatedDataIndex !== -1){
-                state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            }
-            state.data.recentlyPlayed.push(recentData)
+            // const recentData = action.payload
+            // const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
+            // console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
+            // if (repeatedDataIndex !== -1){
+            //     state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            // }
+            // state.data.recentlyPlayed.unshift(recentData)
         }
     },
 })

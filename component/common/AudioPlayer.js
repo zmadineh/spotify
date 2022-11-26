@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import {useDispatch} from "react-redux";
 import {handlePlay} from "../../redux/slices/musics.slice";
 
-export default function AudioPlayer ({track, skipForward, skipPrevious}) {
+export default function AudioPlayer ({track, forward, backward, skipForward, skipBackward}) {
 
     const dispatch = useDispatch();
 
@@ -21,6 +21,8 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
     const [src, setSrc] = useState("");
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
+    const [repeat, setRepeat] = useState(false)
+    const [shuffle, setShuffle] = useState(false)
 
     // references
     const audioPlayer = useRef();   // reference our audio component
@@ -33,7 +35,6 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
         const seconds = Math.floor(audioPlayer.current.duration);
         setDuration(seconds);
         progressBar.current.max = seconds;
-        console.log('use effect: ', track.playing, track.pause, currentTime, track.src)
 
         if (track.playing) {
             audioPlayer.current.play();
@@ -57,7 +58,6 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
         const prevValue = playing;
         setPlaying(!prevValue);
 
-        console.log('audio: ', track.playing, track.pause)
         if (!prevValue) {
             audioPlayer.current.play();
             animationRef.current = requestAnimationFrame(whilePlaying)
@@ -66,6 +66,14 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
             cancelAnimationFrame(animationRef.current);
         }
         dispatch(handlePlay(track))
+    }
+
+    const toggleRepeat = () => {
+        setRepeat(!repeat)
+    }
+
+    const toggleShuffle = () => {
+        setShuffle(!shuffle)
     }
 
     const whilePlaying = () => {
@@ -80,24 +88,29 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
     }
 
     const changePlayerCurrentTime = () => {
-        // progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
         setCurrentTime(progressBar.current.value);
     }
 
-    console.log('audio vasat: ', track.playing, track.pause)
-
     return (
-        <div>
+        <Grid>
             <Grid display={"flex"} justifyContent={"center"} gap={2} color={'text.secondary'}>
-                <IconButton color={"inherit"}><ShuffleIcon fontSize={"small"} /></IconButton>
-                <IconButton color={"inherit"} onClick={skipPrevious}><SkipPreviousIcon fontSize={"small"} /></IconButton>
+                <IconButton sx={{color: (shuffle ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleShuffle}>
+                    <ShuffleIcon fontSize={"small"} />
+                </IconButton>
+                <IconButton sx={{color: (backward ? 'secondary.main' : 'action.disabledBackground')}} onClick={skipBackward}>
+                    <SkipPreviousIcon fontSize={"small"} />
+                </IconButton>
                 <IconButton>
                     <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause}>
                         {playing ? <PauseIcon /> : <PlayArrowIcon />}
                     </PlayPauseAction>
                 </IconButton>
-                <IconButton color={"inherit"} onClick={skipForward}><SkipNextIcon fontSize={"small"} /></IconButton>
-                <IconButton color={"inherit"}><RepeatIcon fontSize={"small"} /></IconButton>
+                <IconButton sx={{color: (forward ? 'secondary.main' : 'action.disabledBackground')}} onClick={skipForward}>
+                    <SkipNextIcon fontSize={"small"} />
+                </IconButton>
+                <IconButton sx={{color: (repeat ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleRepeat}>
+                    <RepeatIcon fontSize={"small"} />
+                </IconButton>
             </Grid>
 
             <Grid display={"flex"} justifyContent={"center"}>
@@ -106,8 +119,7 @@ export default function AudioPlayer ({track, skipForward, skipPrevious}) {
                     <Grid><input type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></Grid>
                     <Grid>{calculateTime(currentTime)} {(duration && !isNaN(duration)) && calculateTime(duration)}</Grid>
                 </Grid>
-
             </Grid>
-        </div>
+        </Grid>
     )
 }

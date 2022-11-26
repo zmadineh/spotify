@@ -13,12 +13,13 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
-import TableHeaderCell from "../track/TableHeaderCell";
+import TableHeaderCell from "./TableHeaderCell";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import TrackCard from "../track/TrackCard";
-import {handleLike, handlePlay} from "../../redux/slices/musics.slice";
-import TableRowCell from "../track/TableRowCell";
+import TrackCard from "./TrackCard";
+import {addRecent, handleLike, handlePlay} from "../../redux/slices/musics.slice";
+import TableRowCell from "./TableRowCell";
+import TrackRow from "./TrackRow";
 
 
 export default function TrackTable ({music, type}) {
@@ -28,25 +29,19 @@ export default function TrackTable ({music, type}) {
 
     const tracks = (type === 'track' ? [music] : getTracksByPlaylist(data['track'], music.id));
     console.log(tracks)
-    const [displayIcon, setDisplayIcon] = useState(false);
 
     const handleMusicClicked = track => {
         dispatch(handlePlay(track))
+        dispatch(addRecent(track))
     }
 
     const handleLikeClicked = track => {
         dispatch(handleLike(track))
-    }
-
-    const handlePausePlayIcon = (track, index) => {
-        if(track.playing || track.pause)
-            return <PlayArrowIcon />
-        else return index+1
-    }
+    };
 
     return (
         <TableContainer>
-            <Table sx={{backgroundColor: '#00000003', padding: '20px', borderCollapse: 'separate'}}>
+            <Table sx={{backgroundColor: '#00000003', padding: ' 0 20px', borderCollapse: 'separate', border: 0}}>
                 <colgroup>
                     <col style={{width:'4%'}}/>
                     <col style={{width:'36%'}}/>
@@ -57,7 +52,7 @@ export default function TrackTable ({music, type}) {
                     <col style={{width:'3%'}}/>
                 </colgroup>
                 <TableHead>
-                    <TableRow sx={{ borderColor: 'divider' }}>
+                    <TableRow sx={{borderBottom: "2px solid black",}}>
                         <TableCell align="center"><TableHeaderCell>#</TableHeaderCell></TableCell>
                         <TableCell><TableHeaderCell>TITLE</TableHeaderCell></TableCell>
                         <TableCell><TableHeaderCell>ALBUM</TableHeaderCell></TableCell>
@@ -69,32 +64,12 @@ export default function TrackTable ({music, type}) {
                 </TableHead>
                 <TableBody>
                     {tracks.map((track, index) => (
-                        <TableRow
+                        <TrackRow
                             key={track.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 }, "&:hover" : {backgroundColor: '#59595933'}, cursor: "pointer" }}
-                            onMouseEnter={() => setDisplayIcon(true)}
-                            onMouseLeave={() => setDisplayIcon(false)}
-                        >
-                            <TableCell component="th" scope="row" align="center"><TableRowCell>{handlePausePlayIcon(track, index)}</TableRowCell></TableCell>
-                            <TableCell component="th" scope="row"
-                                       onClick={() => handleMusicClicked(track)}
-                            >
-                                <TrackCard track={track} />
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="left"><TableRowCell>{track.album}</TableRowCell></TableCell>
-                            <TableCell component="th" scope="row" align="left"><TableRowCell>{track.date}</TableRowCell></TableCell>
-
-                            <TableCell component="th" scope="row" align="right"
-                                       onClick={() => handleLikeClicked(track)}>
-                                <TableRowCell>
-                                {(displayIcon || track.favorite) &&
-                                    (track.favorite ? <FavoriteIcon color={"success"}/> : <FavoriteBorderIcon color={'inherit'}/>)
-                                }</TableRowCell>
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center"><TableRowCell>{track.time}</TableRowCell></TableCell>
-                            <TableCell component="th" scope="row" align="left"><TableRowCell>{displayIcon && <MoreHorizIcon />}</TableRowCell></TableCell>
-
-                        </TableRow>
+                            track={track}
+                            index={index}
+                            handleLikeClicked={handleLikeClicked}
+                            handleMusicClicked={handleMusicClicked}/>
                     ))}
                 </TableBody>
             </Table>
