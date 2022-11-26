@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-// import styles from "../styles/AudioPlayer.module.css";
 
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
@@ -10,10 +9,16 @@ import PauseIcon from '@mui/icons-material/Pause';
 import IconButton from "@mui/material/IconButton";
 import PlayPauseAction from "./PlayPauseAction";
 import Grid from "@mui/material/Grid";
+import {useDispatch} from "react-redux";
+import {handlePlay} from "../../redux/slices/musics.slice";
 
-export default function AudioPlayer ({track}) {
+export default function AudioPlayer ({track, skipForward, skipPrevious}) {
+
+    const dispatch = useDispatch();
+
     // state
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [playing, setPlaying] = useState(false);
+    const [src, setSrc] = useState("");
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
@@ -23,10 +28,22 @@ export default function AudioPlayer ({track}) {
     const animationRef = useRef();  // reference the animation
 
     useEffect(() => {
+        setPlaying(track.playing)
+        setSrc(track.src)
         const seconds = Math.floor(audioPlayer.current.duration);
         setDuration(seconds);
         progressBar.current.max = seconds;
-    }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+        console.log('use effect: ', track.playing, track.pause, currentTime, track.src)
+
+        if (track.playing) {
+            audioPlayer.current.play();
+            animationRef.current = requestAnimationFrame(whilePlaying)
+        } else {
+            audioPlayer.current.pause();
+            cancelAnimationFrame(animationRef.current);
+        }
+
+    }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState, track.playing]);
 
     const calculateTime = (secs) => {
         const minutes = Math.floor(secs / 60);
@@ -37,8 +54,10 @@ export default function AudioPlayer ({track}) {
     }
 
     const togglePlayPause = () => {
-        const prevValue = isPlaying;
-        setIsPlaying(!prevValue);
+        const prevValue = playing;
+        setPlaying(!prevValue);
+
+        console.log('audio: ', track.playing, track.pause)
         if (!prevValue) {
             audioPlayer.current.play();
             animationRef.current = requestAnimationFrame(whilePlaying)
@@ -46,6 +65,7 @@ export default function AudioPlayer ({track}) {
             audioPlayer.current.pause();
             cancelAnimationFrame(animationRef.current);
         }
+        dispatch(handlePlay(track))
     }
 
     const whilePlaying = () => {
@@ -64,72 +84,30 @@ export default function AudioPlayer ({track}) {
         setCurrentTime(progressBar.current.value);
     }
 
-    const backThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value - 30);
-        changeRange();
-    }
-
-    const forwardThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value + 30);
-        changeRange();
-    }
-
-    const handlePausePlayIcon = (track) => {
-        if(track.playing)
-            return <PauseIcon />
-        else if (track.pause)
-            return <PlayArrowIcon />
-    }
-
-    const handlePlayMusic = (track) => {
-        // const audioEl = document.getElementsByClassName("audio-element")[0];
-        // if(currentTrack.pause)
-        //     audioEl.play();
-        // else if(currentTrack.playing)
-        //     audioEl.pause();
-        // dispatch(handlePlay(currentTrack));
-    };
+    console.log('audio vasat: ', track.playing, track.pause)
 
     return (
         <div>
             <Grid display={"flex"} justifyContent={"center"} gap={2} color={'text.secondary'}>
                 <IconButton color={"inherit"}><ShuffleIcon fontSize={"small"} /></IconButton>
-                <IconButton color={"inherit"}><SkipPreviousIcon fontSize={"small"} /></IconButton>
+                <IconButton color={"inherit"} onClick={skipPrevious}><SkipPreviousIcon fontSize={"small"} /></IconButton>
                 <IconButton>
                     <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause}>
-                        {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                        {playing ? <PauseIcon /> : <PlayArrowIcon />}
                     </PlayPauseAction>
                 </IconButton>
-                <IconButton color={"inherit"}><SkipNextIcon fontSize={"small"} /></IconButton>
+                <IconButton color={"inherit"} onClick={skipForward}><SkipNextIcon fontSize={"small"} /></IconButton>
                 <IconButton color={"inherit"}><RepeatIcon fontSize={"small"} /></IconButton>
             </Grid>
 
             <Grid display={"flex"} justifyContent={"center"}>
-                <audio ref={audioPlayer} src={track.src} preload="metadata"></audio>
+                <audio ref={audioPlayer} src={src} preload="metadata"></audio>
                 <Grid display={"flex"}>
                     <Grid><input type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></Grid>
                     <Grid>{calculateTime(currentTime)} {(duration && !isNaN(duration)) && calculateTime(duration)}</Grid>
                 </Grid>
 
             </Grid>
-
-
-            {/*<button onClick={backThirty}><SkipPreviousIcon /> 30</button>*/}
-            {/*<button onClick={togglePlayPause}>*/}
-            {/*    {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}*/}
-            {/*</button>*/}
-            {/*<button onClick={forwardThirty}>30 <SkipNextIcon /></button>*/}
-
-            {/* current time */}
-            {/*<div>{calculateTime(currentTime)}</div>*/}
-
-            {/* progress bar */}
-            {/*<div>*/}
-            {/*    <input type="range" defaultValue="0" ref={progressBar} onChange={changeRange} />*/}
-            {/*</div>*/}
-
-            {/* duration */}
-            {/*<div>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>*/}
         </div>
     )
 }

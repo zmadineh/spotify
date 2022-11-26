@@ -8,7 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {useState} from "react";
 import PlayPauseAction from "../common/PlayPauseAction";
 import {useDispatch} from "react-redux";
-import {handlePlay} from "../../redux/slices/musics.slice";
+import {handlePlay, addRecent} from "../../redux/slices/musics.slice";
 
 export default function ActionCard ({music}) {
 
@@ -16,6 +16,7 @@ export default function ActionCard ({music}) {
 
     const handlePlayMusic = () => {
         dispatch(handlePlay(music))
+        dispatch(addRecent(music))
     }
 
     return (

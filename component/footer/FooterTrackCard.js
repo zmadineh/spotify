@@ -13,8 +13,8 @@ export default function FooterTrackCard({currentTrack, handleLikeClick, maxWidth
         <Grid item display={"flex"} alignItems={"center"} justifyContent={"space-between"} maxWidth={maxWidth}>
             <TrackCard track={currentTrack} />
             <Grid item display={"flex"}>
-                <IconButton sx={{color: "secondary.light"}} onClick={handleLikeClick}>
-                    {currentTrack.favorite ? <FavoriteIcon fontSize={"small"} color={"error"}/> : <FavoriteBorderIcon fontSize={"small"}/>}
+                <IconButton sx={{color: "secondary.light"}} onClick={() => handleLikeClick(currentTrack)}>
+                    {currentTrack.favorite ? <FavoriteIcon fontSize={"small"} color={"success"}/> : <FavoriteBorderIcon fontSize={"small"}/>}
                 </IconButton>
                 <IconButton sx={{color: "secondary.light"}}>
                     <MusicVideoIcon fontSize={"small"}/>
