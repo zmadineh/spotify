@@ -20,8 +20,6 @@ export default function Footer({ sidebarWidth }) {
     const trackArray = trackData.filter(track => track.playlist_id === currentTrack.playlist_id)
     const [trackIndex, setTrackIndex] = useState(trackArray.findIndex(item => item.id === currentTrack.id))
 
-    console.log('footer: ', trackArray, trackIndex, trackArray.length)
-
     let emptyMusic = false;
 
     const handleLikeClick = (track) => {
@@ -32,8 +30,6 @@ export default function Footer({ sidebarWidth }) {
     const skipForward = () => {
         if (trackIndex+1 < trackArray.length && !forward) {
             dispatch(handlePlay(trackArray[trackIndex + 1]))
-            // console.log('skipForward: ', trackArray, trackIndex, trackArray.length)
-            // setCurrentTrack(trackArray[trackIndex+1])
             setTrackIndex(trackIndex + 1)
         }
         setForward(!forward)
@@ -42,7 +38,6 @@ export default function Footer({ sidebarWidth }) {
     const skipBackward = () => {
         if (trackIndex-1 > -1 && !backward) {
             dispatch(handlePlay(trackArray[trackIndex - 1]))
-            // console.log('skipPrevious: ', trackArray, trackIndex, trackArray.length)
             setTrackIndex(trackIndex - 1)
         }
         setBackward(!backward)
@@ -51,14 +46,14 @@ export default function Footer({ sidebarWidth }) {
     return (
         <Grid container alignItems={"center"} width={"100%"} height={'75px'} color={'text.primary'} bgcolor={'background.secondary'}>
 
-            <Grid item xs={2} p={1}>
+            <Grid item mobile={4} tablet={3} laptop={3} p={1}>
                 <FooterTrackCard
                     currentTrack={currentTrack}
                     handleLikeClick={handleLikeClick}
                     maxWidth={sidebarWidth}/>
             </Grid>
 
-            <Grid item xs={8} display={"flex"} justifyContent={"center"}>
+            <Grid item mobile={4} tablet={6} laptop={6} display={"flex"} justifyContent={"center"}>
                 <AudioPlayer
                     track={currentTrack}
                     skipForward={skipForward}
@@ -67,7 +62,7 @@ export default function Footer({ sidebarWidth }) {
                     skipBackward={skipBackward}/>
             </Grid>
 
-            <Grid item xs={2} display={"flex"} justifyContent={"flex-end"}>
+            <Grid item mobile={4} tablet={3} laptop={3} display={"flex"} justifyContent={"flex-end"}>
                 end
             </Grid>
         </Grid>

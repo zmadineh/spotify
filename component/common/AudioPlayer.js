@@ -11,10 +11,14 @@ import PlayPauseAction from "./PlayPauseAction";
 import Grid from "@mui/material/Grid";
 import {useDispatch} from "react-redux";
 import {handlePlay} from "../../redux/slices/musics.slice";
+import {useTheme} from "@mui/material/styles";
+import {useMediaQuery} from "@mui/material";
 
 export default function AudioPlayer ({track, forward, backward, skipForward, skipBackward}) {
 
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     // state
     const [playing, setPlaying] = useState(false);
@@ -93,7 +97,7 @@ export default function AudioPlayer ({track, forward, backward, skipForward, ski
 
     return (
         <Grid>
-            <Grid display={"flex"} justifyContent={"center"} gap={2} color={'text.secondary'}>
+            <Grid display={"flex"} justifyContent={"center"} gap={(mobileMatch ? 0.5 : 2)} color={'text.secondary'}>
                 <IconButton sx={{color: (shuffle ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleShuffle}>
                     <ShuffleIcon fontSize={"small"} />
                 </IconButton>

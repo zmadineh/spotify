@@ -66,14 +66,15 @@ export const theme = createTheme({
         },
     },
 
-    // breakpoints: {
-    //     values: {
-    //         mobile: 0,
-    //         tablet: 640,
-    //         laptop: 1024,
-    //         desktop: 1200,
-    //     },
-    // },
+    breakpoints: {
+        values: {
+            mobile: 0,
+            tablet: 640,
+            medium: 800,
+            laptop: 1024,
+            desktop: 1200,
+        },
+    },
 
     palette: {
         primary: {
@@ -140,9 +141,27 @@ export const theme = createTheme({
         ].join(','),
 
         h1: {
-            fontSize: "90px",
+            fontSize: "20px",
             fontWeight: 900,
             lineHeight: "113px",
+            '@media (min-width:600px)': {
+                fontSize: '25px',
+            },
+            '@media (min-width:700px)': {
+                fontSize: '30px',
+            },
+            '@media (min-width:800px)': {
+                fontSize: '40px',
+            },
+            '@media (min-width:900px)': {
+                fontSize: '50px',
+            },
+            '@media (min-width:1200px)': {
+                fontSize: '70px',
+            },
+            '@media (min-width:1500px)': {
+                fontSize: '90px',
+            },
         },
         h2: {
             fontSize: "32px",

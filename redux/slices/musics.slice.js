@@ -107,14 +107,21 @@ const musicsSlice = createSlice({
                 }
                 else if (type === 'track'){
                     const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
+                    const currPlaying = state.data.playing;
                     if(newPlaylist) {
                         newPlaylist.playing = true;
                         newPlaylist.pause = false;
                         newData.playing = true;
                         newData.pause = false;
 
-                        const currPlaying = state.data.playing;
                         currPlaying.playlist = newPlaylist.id;
+                        currPlaying.track= newData.id;
+                    }
+                    else {
+                        newData.playing = true;
+                        newData.pause = false;
+
+                        currPlaying.playlist = 0;
                         currPlaying.track= newData.id;
                     }
                 }
