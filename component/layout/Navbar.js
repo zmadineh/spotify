@@ -7,8 +7,9 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
-export default function Navbar({decreaseWidth}) {
+export default function Navbar({decreaseWidth, setSidebarOpen, sidebarOpen}) {
 
     const router = useRouter();
     const [display, setDisplay] = useState(false);
@@ -17,16 +18,30 @@ export default function Navbar({decreaseWidth}) {
         setDisplay(router.pathname.includes('music'))
     },[router])
 
+    const sidebarToggle = () => {
+        setSidebarOpen(!sidebarOpen)
+    }
+
     return (
         <Grid container justifyContent={"space-around"} alignItems={"center"}
-              position={"fixed"} top={0} left={250} p={1}
-              height={'70px'} width={ `calc(100% - ${decreaseWidth}px)`}
+              position={"fixed"} top={0}
+              left={{mobile: 0, tablet: decreaseWidth}}
+              p={1}
+              height={'70px'} width={{mobile: '100%', tablet: `calc(100% - ${decreaseWidth}px)`}}
               zIndex={2000}
               sx={{backgroundColor: display ? 'background.navbarWithOpacity' : 'background.default'}}
         >
-            <Grid item mobile={4} gap={1}>
-                <IconButton sx={{backgroundColor: 'primary.main', color: 'primary.lighter'}}> <ArrowBackIosIcon /> </IconButton>
-                <IconButton sx={{backgroundColor: 'primary.main', color: 'primary.lighter'}}> <ArrowForwardIosIcon /> </IconButton>
+            {/*<Grid item mobile={1} gap={1}>*/}
+            {/*    <IconButton sx={{backgroundColor: 'primary.main', color: 'primary.lighter'}} onClick={sidebarToggle}> <ArrowBackIosIcon /> </IconButton>*/}
+            {/*</Grid>*/}
+
+            <Grid item mobile={4} display={"flex"} gap={1}>
+                <Link href={'/'}>
+                    <IconButton sx={{backgroundColor: 'primary.light', color: 'primary.lighter'}}> <ArrowBackIosIcon /> </IconButton>
+                </Link>
+                <Link href={'/'} aria-disabled={true}>
+                    <IconButton sx={{backgroundColor: 'primary.light', color: 'primary.lighter'}}> <ArrowForwardIosIcon /> </IconButton>
+                </Link>
             </Grid>
 
             <Grid item mobile={8} gap={1} display={"flex"} justifyContent={"flex-end"} color={"secondary"}>

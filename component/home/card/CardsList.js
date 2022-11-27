@@ -17,7 +17,7 @@ export default function CardsList({categoryId}) {
     }
 
     return (
-        <Grid>
+        <Grid mt={4}>
             {playlists.length > 0 &&
                 <Cards title={category.title} data={playlists} showMore={showMore} />
             }

@@ -5,6 +5,6 @@ import Image from "next/image";
 export default function TableRowCell ({children}) {
 
     return (
-        <Typography variant={"h6"} color={'text.primary'}>{children}</Typography>
+        <Typography variant={"h6"} color={'text.primary'}  noWrap textOverflow={'ellipsis'}>{children}</Typography>
     )
 }

@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import Typography from "@mui/material/Typography";
 
 
-export default function Sidebar({sidebarWidth}) {
+export default function Sidebar({sidebarOpen, sidebarWidth}) {
 
     const [selectedItem, setSelectedItem] = useState('home');
 
@@ -33,7 +33,7 @@ export default function Sidebar({sidebarWidth}) {
             left={0}>
             <Image src={spotifyLogo} alt={'spotify-icon'} px={1}/>
 
-            <Box sx={{ width: '100%'}} mt={2}>
+            <Box sx={{ width: (sidebarOpen ? '100%' : 0)}} mt={2}>
                 <CreateList list={sidebarRoutes} selectedItem={selectedItem} handleClick={handleListItemClick}/>
 
                 <Box mt={2}>

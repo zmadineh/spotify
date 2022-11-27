@@ -1,34 +1,37 @@
 import {getTracksByPlaylist} from "../../helper/getData";
+import {useDispatch, useSelector} from "react-redux";
+import {addRecent, handleLike, handlePlay} from "../../redux/slices/musics.slice";
+import TableHeaderCell from "./TableHeaderCell";
+import TrackRow from "./TrackRow";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
+import TableCell, {tableCellClasses} from "@mui/material/TableCell";
+import {styled, useTheme} from "@mui/material/styles";
+import {useMediaQuery} from "@mui/material";
 
-import TableHeaderCell from "./TableHeaderCell";
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import TrackCard from "./TrackCard";
-import {addRecent, handleLike, handlePlay} from "../../redux/slices/musics.slice";
-import TableRowCell from "./TableRowCell";
-import TrackRow from "./TrackRow";
-
+const HeaderTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        color: theme.palette.text.primary,
+    },
+    padding: "6px 4px",
+    borderBottom: '1px solid',
+    borderColor: theme.palette.divider,
+}));
 
 export default function TrackTable ({music, type}) {
 
     const data = useSelector((state) => state.musics.data);
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const mediumMatch = useMediaQuery(theme.breakpoints.down('medium'))
+    const tabletMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     const tracks = (type === 'track' ? [music] : getTracksByPlaylist(data['track'], music.id));
-    console.log(tracks)
 
     const handleMusicClicked = track => {
         dispatch(handlePlay(track))
@@ -41,25 +44,25 @@ export default function TrackTable ({music, type}) {
 
     return (
         <TableContainer>
-            <Table sx={{backgroundColor: '#00000003', padding: ' 0 20px', borderCollapse: 'separate', border: 0}}>
+            <Table sx={{backgroundColor: '#00000003', padding: ' 0 20px', borderCollapse: 'separate', border: 0}} >
                 <colgroup>
                     <col style={{width:'4%'}}/>
-                    <col style={{width:'36%'}}/>
-                    <col style={{width:'25%'}}/>
-                    <col style={{width:'26%'}}/>
+                    <col style={{width: {tablet: '89%', medium: '54%', laptop: '40%' }}}/>
+                    <col style={{width: {tablet: '0%', medium: '35%', laptop: '27%'  }}}/>
+                    <col style={{width: {medium: '0%', laptop: '22%'  }}}/>
+                    <col style={{width:'2%'}}/>
                     <col style={{width:'3%'}}/>
-                    <col style={{width:'3%'}}/>
-                    <col style={{width:'3%'}}/>
+                    <col style={{width: {tablet: '0%', medium: '2%'}}}/>
                 </colgroup>
                 <TableHead>
-                    <TableRow sx={{borderBottom: "2px solid black",}}>
-                        <TableCell align="center"><TableHeaderCell>#</TableHeaderCell></TableCell>
-                        <TableCell><TableHeaderCell>TITLE</TableHeaderCell></TableCell>
-                        <TableCell><TableHeaderCell>ALBUM</TableHeaderCell></TableCell>
-                        <TableCell><TableHeaderCell>DATE ADDED</TableHeaderCell></TableCell>
-                        <TableCell align="center"></TableCell>
-                        <TableCell align="center"><TableHeaderCell><AccessTimeIcon /></TableHeaderCell></TableCell>
-                        <TableCell align="center"></TableCell>
+                    <TableRow>
+                        <HeaderTableCell align="center"><TableHeaderCell>#</TableHeaderCell></HeaderTableCell>
+                        <HeaderTableCell><TableHeaderCell>TITLE</TableHeaderCell></HeaderTableCell>
+                        {!tabletMatch && <HeaderTableCell><TableHeaderCell>ALBUM</TableHeaderCell></HeaderTableCell>}
+                        {!mediumMatch && <HeaderTableCell><TableHeaderCell>DATE ADDED</TableHeaderCell></HeaderTableCell>}
+                        <HeaderTableCell align="center"></HeaderTableCell>
+                        <HeaderTableCell align="center"><TableHeaderCell><AccessTimeIcon /></TableHeaderCell></HeaderTableCell>
+                        {!tabletMatch && <HeaderTableCell align="center"></HeaderTableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -69,7 +72,10 @@ export default function TrackTable ({music, type}) {
                             track={track}
                             index={index}
                             handleLikeClicked={handleLikeClicked}
-                            handleMusicClicked={handleMusicClicked}/>
+                            handleMusicClicked={handleMusicClicked}
+                            mediumMatch={mediumMatch}
+                            tabletMatch={tabletMatch}
+                        />
                     ))}
                 </TableBody>
             </Table>

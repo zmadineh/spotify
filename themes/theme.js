@@ -70,7 +70,7 @@ export const theme = createTheme({
         values: {
             mobile: 0,
             tablet: 640,
-            medium: 800,
+            medium: 880,
             laptop: 1024,
             desktop: 1200,
         },
@@ -169,9 +169,21 @@ export const theme = createTheme({
             lineHeight: "38px",
         },
         h3: {
-            fontSize: "24px",
+            fontSize: "15px",
             fontWeight: 700,
             lineHeight: "38px",
+            '@media (min-width:640px)': {
+                fontSize: '18px',
+            },
+            '@media (min-width:700px)': {
+                fontSize: '20px',
+            },
+            '@media (min-width:800px)': {
+                fontSize: '22px',
+            },
+            '@media (min-width:1000)': {
+                fontSize: '24px',
+            },
         },
         h4: {
             fontSize: "15px",
@@ -179,9 +191,12 @@ export const theme = createTheme({
             lineHeight: "24px",
         },
         h5: {
-            fontSize: "15px",
+            fontSize: "13px",
             fontWeight: 400,
             lineHeight: "19px",
+            '@media (min-width:600px)': {
+                fontSize: '15px',
+            },
         },
         h6: {
             fontSize: "14px",
@@ -200,8 +215,8 @@ export const theme = createTheme({
         },
     },
 
-    // shadows: Array(25).fill('none')
-    shadows: [
-        '0px 8px 8px rgba(0, 0, 0, 0.25)',
-    ],
+    shadows: Array(25).fill('none')
+    // shadows: [
+    //     '0px 8px 8px rgba(0, 0, 0, 0.25)',
+    // ],
 });

@@ -18,7 +18,7 @@ export default function AudioPlayer ({track, forward, backward, skipForward, ski
 
     const dispatch = useDispatch();
     const theme = useTheme();
-    const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
+    const tabletMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     // state
     const [playing, setPlaying] = useState(false);
@@ -97,15 +97,15 @@ export default function AudioPlayer ({track, forward, backward, skipForward, ski
 
     return (
         <Grid>
-            <Grid display={"flex"} justifyContent={"center"} gap={(mobileMatch ? 0.5 : 2)} color={'text.secondary'}>
+            <Grid display={"flex"} justifyContent={"center"} gap={(tabletMatch ? 0.5 : 2)} color={'text.secondary'}>
                 <IconButton sx={{color: (shuffle ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleShuffle}>
                     <ShuffleIcon fontSize={"small"} />
                 </IconButton>
                 <IconButton sx={{color: (backward ? 'secondary.main' : 'action.disabledBackground')}} onClick={skipBackward}>
                     <SkipPreviousIcon fontSize={"small"} />
                 </IconButton>
-                <IconButton>
-                    <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause}>
+                <IconButton onClick={togglePlayPause}>
+                    <PlayPauseAction color={"secondary.main"}>
                         {playing ? <PauseIcon /> : <PlayArrowIcon />}
                     </PlayPauseAction>
                 </IconButton>

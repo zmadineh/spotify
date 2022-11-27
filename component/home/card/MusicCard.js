@@ -1,33 +1,41 @@
 import Image from "next/image";
+import {useRouter} from "next/router";
 
-import {Grid} from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { CardActionArea } from '@mui/material';
-import {useRouter} from "next/router";
+import CardActionArea from '@mui/material/CardActionArea';
 
 export default function MusicCard ({music, type}) {
 
     const router = useRouter();
+    const theme = useTheme();
+    const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
+    const containerWidth = (mobileMatch ? '120px' : '180px');
+    const imageSize = (mobileMatch ? '100px' : '160px');
 
     return (
         <Card
             variant="outlined"
-            sx={{maxWidth: '180px', borderRadius: '8px', cursor: 'pointer', backgroundColor: 'background.secondary'}}
+            sx={{maxWidth: containerWidth, borderRadius: '8px', cursor: 'pointer', backgroundColor: 'background.secondary'}}
             onClick={() => router.push(`musics/${type}/${music.id}`)}
         >
             <CardActionArea>
-                <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} height={'180px'} p={1}>
-                    <Image src={music.image} style={{width: '160px', height: '160px', borderRadius: (type === 'playlist' ? '6px' : '50%')}} />
+                <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} height={containerWidth} p={1}>
+                    <Image src={music.image} alt={'music image'} style={{width: imageSize, height: imageSize, borderRadius: (type === 'playlist' ? '6px' : '50%')}} />
                 </Grid>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div"  noWrap textOverflow={'ellipsis'}>
                         {music.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap textOverflow={'ellipsis'}>
-                        {type === 'track' ? music.singer : music.information}
-                    </Typography>
+                    {!mobileMatch &&
+                        <Typography variant="body2" color="text.secondary" noWrap textOverflow={'ellipsis'}>
+                            {type === 'track' ? music.singer : music.information}
+                        </Typography>
+                    }
                 </CardContent>
             </CardActionArea>
         </Card>

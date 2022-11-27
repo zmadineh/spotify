@@ -1,5 +1,5 @@
+import {useRouter} from "next/router";
 import TrackCard from "../track/TrackCard";
-
 import Grid from "@mui/material/Grid";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -13,8 +13,12 @@ export default function FooterTrackCard({currentTrack, handleLikeClick, maxWidth
     const theme = useTheme();
     const mediumMatch = useMediaQuery(theme.breakpoints.up('medium'))
 
+    const router = useRouter();
+
     return (
-        <Grid item display={"flex"} alignItems={"center"} justifyContent={"space-between"} maxWidth={maxWidth}>
+        <Grid item display={"flex"} alignItems={"center"} justifyContent={"space-between"} maxWidth={maxWidth}
+              // onClick={() => router.push(`musics/${currentTrack.type}/${currentTrack.id}`)}
+        >
             <TrackCard track={currentTrack} />
             { mediumMatch &&
                 <Grid item display={"flex"}>
