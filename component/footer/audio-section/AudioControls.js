@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import ControlButton from "./ControlButton";
 import PlayPauseAction from "../../common/PlayPauseAction";
 
 import {useTheme} from "@mui/material/styles";
@@ -9,13 +10,7 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {styled} from "@mui/material/styles";
-import ControlButton from "./ControlButton";
-
-
-
 
 
 export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, backward, skipBackward, forward, skipForward, isPlaying, togglePlayPause}) {
@@ -31,7 +26,6 @@ export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, 
     const toggleShuffle = () => {
         if (!shuffle) setRepeat(false)
         setShuffle(!shuffle)
-
     }
 
     return (

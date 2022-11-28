@@ -42,3 +42,20 @@ export default function music () {
         </MusicMainGrid>
     )
 }
+
+
+// Generates `/playlist/1` and `/playlist/2`
+export async function getStaticPaths() {
+    return {
+        paths: [{ params: { type: 'playlist', id: '1' } }, { params: { type: 'playlist',  id: '2' } }],
+        fallback: false, // can also be true or 'blocking'
+    }
+}
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps(context) {
+    return {
+        // Passed to the page component as props
+        props: { post: {} },
+    }
+}

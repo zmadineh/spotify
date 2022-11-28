@@ -1,34 +1,34 @@
-import React, {useRef, useState} from 'react'
+import React, {useState, useCallback} from 'react'
 import {useDispatch} from "react-redux";
-import {handlePlay} from "../../../redux/slices/musics.slice";
+import {handlePlay, pauseTrack, playTrack} from "../../../redux/slices/musics.slice";
 import AudioSlider from "./AudioSlider";
 import AudioControls from "./AudioControls";
 
-import {useTheme} from "@mui/material/styles";
-import {useMediaQuery} from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-export default function AudioPlayer ({track, forward, backward, skipForward, skipBackward, shuffle, setShuffle, handleShuffle}) {
+export default function AudioPlayer ({track, audioPlayer, forward, backward, skipForward, skipBackward, shuffle, setShuffle, handleShuffle}) {
 
     const dispatch = useDispatch();
-    const theme = useTheme();
-    const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     // state
     const [isPlaying, setIsPlaying] = useState(false);
     const [repeat, setRepeat] = useState(false)
 
-    // references
-    const audioPlayer = useRef();   // reference our audio component
+    const togglePlayPause = useCallback(() => {
 
-    const togglePlayPause = () => {
-        if (!isPlaying)
-            audioPlayer.current.play();
-        else
+        console.log(track.playing, track.pause)
+
+        if (track.playing) {
             audioPlayer.current.pause();
+            dispatch(pauseTrack(track)) ;
+        }
+        else if(track.pause) {
+            audioPlayer.current.play();
+            dispatch(playTrack(track))
+        }
         setIsPlaying(!isPlaying);
-        dispatch(handlePlay(track))
-    }
+
+    }, [track]);
 
     return (
         <Grid width={'100%'} p={1}>

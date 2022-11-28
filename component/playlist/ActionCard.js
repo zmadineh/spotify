@@ -8,14 +8,34 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {useState} from "react";
 import PlayPauseAction from "../common/PlayPauseAction";
 import {useDispatch} from "react-redux";
-import {handlePlay, addRecent, handleLike} from "../../redux/slices/musics.slice";
+import {
+    handlePlay,
+    addRecent,
+    handleLike,
+    pausePlaylist,
+    playPlaylist,
+    pauseTrack, playTrack
+} from "../../redux/slices/musics.slice";
 
 export default function ActionCard ({music}) {
 
     const dispatch = useDispatch();
 
     const handlePlayMusic = () => {
-        dispatch(handlePlay(music))
+        if (music.type === 'playlist'){
+            if (music.playing)
+                dispatch(pausePlaylist(music))
+            else if (music.pause || !music.playing)
+                dispatch(playPlaylist(music))
+        }
+        else if (music.type === 'track'){
+            if (music.playing)
+                dispatch(pauseTrack(music))
+            else if (music.pause || !music.playing)
+                dispatch(playTrack(music))
+        }
+
+        // dispatch(handlePlay(music))
         dispatch(addRecent(music))
     }
 

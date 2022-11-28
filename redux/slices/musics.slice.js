@@ -38,130 +38,230 @@ const musicsSlice = createSlice({
                 if (track) track.favorite = !track.favorite;
             }
         },
-        handlePlay: (state, action) => {
-
-            // add to recently played
-            // const recentData = action.payload
-            // const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
-            // // console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
-            // if (repeatedDataIndex !== -1){
-            //     state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            // }
-            // state.data.recentlyPlayed.unshift(recentData)
-
-
-
-            // toggle play track or playlist
-            const type = action.payload.type;
-            const payload = action.payload;
-            const newData = state.data[type].find(item => item.id === payload.id)
-
-            if (newData.id === state.data.playing[type]) {
-                if (type === 'playlist') {
-                    const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
-                    if (newTracks.length > 0) {
-                        const firstTrack = newTracks[0]
-                        firstTrack.playing = !firstTrack.playing;
-                        firstTrack.pause = !firstTrack.pause;
-                        newData.playing = !newData.playing;
-                        newData.pause = !newData.pause;
-
-                        const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
-                        if (repeatedDataIndex !== -1){
-                            state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-                        }
-                        state.data.recentlyPlayed.unshift(firstTrack)
-                    }
-                }
-                else if (type === 'track') {
-                    console.log('current track received')
-                    const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
-                    if(newPlaylist) {
-                        newPlaylist.playing = !newPlaylist.playing;
-                        newPlaylist.pause = !newPlaylist.pause;
-                    }
-                    newData.playing = !newData.playing;
-                    newData.pause = !newData.pause;
-
-                    const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
-                    if (repeatedDataIndex !== -1){
-                        state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-                    }
-                    state.data.recentlyPlayed.unshift(newData)
-                }
+        pauseTrack: (state, action) =>  {
+            console.log('pause track id : ', action.payload.id)
+            const currentTrack = state.data.track.find(track => track.id === action.payload.id)
+            const currentPlaylist = state.data.playlist.find(playlist => playlist.id === currentTrack.playlist_id)
+            if (currentTrack) {
+                currentTrack.playing = false;
+                currentTrack.pause = true;
+            }
+            if (currentPlaylist) {
+                currentPlaylist.playing = false;
+                currentPlaylist.pause = true;
+            }
+        },
+        playTrack: (state, action) =>  {
+            const prevPlayingTrackId = state.data.playing['track'];
+            const prevPlayingPlaylistId = state.data.playing['playlist'];
+            const prevTrack = state.data.track.find(track => track.id === prevPlayingTrackId)
+            const prevPlaylist = state.data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
+            if (prevTrack) {
+                prevTrack.playing = false;
+                prevTrack.pause = false;
+            }
+            if (prevPlaylist) {
+                prevPlaylist.playing = false;
+                prevPlaylist.pause = false;
             }
 
-            else if (newData) {
-                const prevPlayingTrackId = state.data.playing['track'];
-                const prevPlayingPlaylistId = state.data.playing['playlist'];
-                const prevTrack = state.data.track.find(track => track.id === prevPlayingTrackId)
-                const prevPlaylist = state.data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
-                if (prevTrack) {
-                    prevTrack.playing = false;
-                    prevTrack.pause = false;
+            const currPlaying = state.data.playing;
+            const currentTrack = state.data.track.find(track => track.id === action.payload.id)
+            console.log('current track id : ', currentTrack.id)
+
+            if (currentTrack) {
+                currentTrack.playing = true;
+                currentTrack.pause = false;
+                currPlaying.track = currentTrack.id;
+
+                const currentPlaylist = state.data.playlist.find(playlist => playlist.id === currentTrack.playlist_id)
+                if (currentPlaylist) {
+                    currentPlaylist.playing = true;
+                    currentPlaylist.pause = false;
+
+                    currPlaying.playlist = currentPlaylist.id;
                 }
-                if (prevPlaylist) {
-                    prevPlaylist.playing = false;
-                    prevPlaylist.pause = false;
+                else {
+                    currPlaying.playlist = 0;
                 }
-
-                if (type === 'playlist') {
-                    const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
-                    if (newTracks.length > 0) {
-                        const firstTrack = newTracks[0]
-                        firstTrack.playing = true;
-                        firstTrack.pause = false;
-                        newData.playing = true;
-                        newData.pause = false;
-
-                        const currPlaying = state.data.playing;
-                        currPlaying.playlist = newData.id;
-                        currPlaying.track= firstTrack.id;
-
-                        const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
-                        if (repeatedDataIndex !== -1){
-                            state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-                        }
-                        state.data.recentlyPlayed.unshift(firstTrack)
-                    }
-                }
-                else if (type === 'track'){
-                    const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
-                    const currPlaying = state.data.playing;
-                    if(newPlaylist) {
-                        newPlaylist.playing = true;
-                        newPlaylist.pause = false;
-                        newData.playing = true;
-                        newData.pause = false;
-
-                        currPlaying.playlist = newPlaylist.id;
-                        currPlaying.track= newData.id;
-                    }
-                    else {
-                        newData.playing = true;
-                        newData.pause = false;
-
-                        currPlaying.playlist = 0;
-                        currPlaying.track= newData.id;
-                    }
-
-                    const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
-                    if (repeatedDataIndex !== -1){
-                        state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-                    }
-                    state.data.recentlyPlayed.unshift(newData)
-                }
+            }
+            else {
+                currPlaying.playlist = 0;
+                currPlaying.track = 0;
             }
         },
 
-        addRecent: (state, action) => {
-            // const recentData = action.payload
-            // const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
-            // console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
-            // if (repeatedDataIndex !== -1){
-            //     state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+        pausePlaylist: (state, action) =>  {
+            const currentPlaylist = state.data.playlist.find(playlist => playlist.id === action.payload.id)
+            const currentTrack = state.data.track.find(track => (track.playlist_id === currentPlaylist.id && track.playing))
+            if (currentTrack) {
+                currentTrack.playing = false;
+                currentTrack.pause = true;
+            }
+            if (currentPlaylist) {
+                currentPlaylist.playing = false;
+                currentPlaylist.pause = true;
+            }
+        },
+
+        playPlaylist: (state, action) =>  {
+            const prevPlayingTrackId = state.data.playing['track'];
+            const prevPlayingPlaylistId = state.data.playing['playlist'];
+            const prevTrack = state.data.track.find(track => track.id === prevPlayingTrackId)
+            const prevPlaylist = state.data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
+            if (prevTrack) {
+                prevTrack.playing = false;
+                prevTrack.pause = false;
+            }
+            if (prevPlaylist) {
+                prevPlaylist.playing = false;
+                prevPlaylist.pause = false;
+            }
+
+            const currPlaying = state.data.playing;
+            const currentPlaylist = state.data.playlist.find(playlist => playlist.id === action.payload.id)
+
+            if (currentPlaylist) {
+
+                const playlistTracks = state.data.track.filter(track => (track.playlist_id === currentPlaylist.id))
+
+                if (playlistTracks.length > 0) {
+                    const firstTrack = playlistTracks[0]
+                    firstTrack.playing = true;
+                    firstTrack.pause = false;
+
+                    currentPlaylist.playing = true;
+                    currentPlaylist.pause = false;
+
+                    currPlaying.track = firstTrack.id;
+                    currPlaying.playlist = currentPlaylist.id;
+                }
+                else {
+                    currPlaying.playlist = 0;
+                    currPlaying.track = 0;
+                }
+            }
+            else {
+                currPlaying.track = 0;
+                currPlaying.playlist = 0;
+            }
+        },
+
+        handlePlay: (state, action) => {
+            // toggle play track or playlist
+            // const type = action.payload.type;
+            // const payload = action.payload;
+            // const newData = state.data[type].find(item => item.id === payload.id)
+            //
+            // if (newData.id === state.data.playing[type]) {
+            //     if (type === 'playlist') {
+            //         const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
+            //         if (newTracks.length > 0) {
+            //             const firstTrack = newTracks[0]
+            //             firstTrack.playing = !firstTrack.playing;
+            //             firstTrack.pause = !firstTrack.pause;
+            //             newData.playing = !newData.playing;
+            //             newData.pause = !newData.pause;
+            //
+            //             const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
+            //             if (repeatedDataIndex !== -1){
+            //                 state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            //             }
+            //             state.data.recentlyPlayed.unshift(firstTrack)
+            //         }
+            //     }
+            //     else if (type === 'track') {
+            //         console.log('current track received')
+            //         const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
+            //         if(newPlaylist) {
+            //             newPlaylist.playing = !newPlaylist.playing;
+            //             newPlaylist.pause = !newPlaylist.pause;
+            //         }
+            //         newData.playing = !newData.playing;
+            //         newData.pause = !newData.pause;
+            //
+            //         const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
+            //         if (repeatedDataIndex !== -1){
+            //             state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            //         }
+            //         state.data.recentlyPlayed.unshift(newData)
+            //     }
             // }
-            // state.data.recentlyPlayed.unshift(recentData)
+            //
+            // else if (newData) {
+            //     const prevPlayingTrackId = state.data.playing['track'];
+            //     const prevPlayingPlaylistId = state.data.playing['playlist'];
+            //     const prevTrack = state.data.track.find(track => track.id === prevPlayingTrackId)
+            //     const prevPlaylist = state.data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
+            //     if (prevTrack) {
+            //         prevTrack.playing = false;
+            //         prevTrack.pause = false;
+            //     }
+            //     if (prevPlaylist) {
+            //         prevPlaylist.playing = false;
+            //         prevPlaylist.pause = false;
+            //     }
+            //
+            //     if (type === 'playlist') {
+            //         const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
+            //         if (newTracks.length > 0) {
+            //             const firstTrack = newTracks[0]
+            //             firstTrack.playing = true;
+            //             firstTrack.pause = false;
+            //             newData.playing = true;
+            //             newData.pause = false;
+            //
+            //             const currPlaying = state.data.playing;
+            //             currPlaying.playlist = newData.id;
+            //             currPlaying.track= firstTrack.id;
+            //
+            //             const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
+            //             if (repeatedDataIndex !== -1){
+            //                 state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            //             }
+            //             state.data.recentlyPlayed.unshift(firstTrack)
+            //         }
+            //     }
+            //     else if (type === 'track'){
+            //         const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
+            //         const currPlaying = state.data.playing;
+            //         if(newPlaylist) {
+            //             newPlaylist.playing = true;
+            //             newPlaylist.pause = false;
+            //             newData.playing = true;
+            //             newData.pause = false;
+            //
+            //             currPlaying.playlist = newPlaylist.id;
+            //             currPlaying.track= newData.id;
+            //         }
+            //         else {
+            //             newData.playing = true;
+            //             newData.pause = false;
+            //
+            //             currPlaying.playlist = 0;
+            //             currPlaying.track= newData.id;
+            //         }
+            //
+            //         const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
+            //         if (repeatedDataIndex !== -1){
+            //             state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            //         }
+            //         state.data.recentlyPlayed.unshift(newData)
+            //     }
+            // }
+        },
+
+        addRecent: (state, action) => {
+            const recentData = action.payload
+            if (recentData.type === 'track')
+            {
+                const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
+                console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
+                if (repeatedDataIndex !== -1){
+                    state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+                }
+                state.data.recentlyPlayed.unshift(recentData)
+            }
         }
     },
 })
@@ -169,6 +269,10 @@ const musicsSlice = createSlice({
 export const {
     handleLike,
     handlePlay,
+    pauseTrack,
+    pausePlaylist,
+    playPlaylist,
+    playTrack,
     addRecent,
 } = musicsSlice.actions;
 

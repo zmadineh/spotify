@@ -1,6 +1,13 @@
 import {getTracksByPlaylist} from "../../helper/getData";
 import {useDispatch, useSelector} from "react-redux";
-import {addRecent, handleLike, handlePlay} from "../../redux/slices/musics.slice";
+import {
+    addRecent,
+    handleLike,
+    handlePlay,
+    pausePlaylist,
+    pauseTrack,
+    playPlaylist, playTrack
+} from "../../redux/slices/musics.slice";
 import TableHeaderCell from "./TableHeaderCell";
 import TrackRow from "./TrackRow";
 
@@ -34,7 +41,12 @@ export default function TrackTable ({music, type}) {
     const tracks = (type === 'track' ? [music] : getTracksByPlaylist(data['track'], music.id));
 
     const handleMusicClicked = track => {
-        dispatch(handlePlay(track))
+        if (track.playing)
+            dispatch(pauseTrack(track))
+        else if (track.pause || !track.playing)
+            dispatch(playTrack(track))
+
+        // dispatch(handlePlay(track))
         dispatch(addRecent(track))
     }
 
