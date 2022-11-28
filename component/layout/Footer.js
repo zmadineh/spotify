@@ -34,7 +34,7 @@ export default function Footer({ sidebarWidth }) {
                 setTrackIndex(trackIndex + 1)
                 // console.log(trackArray[trackIndex + 1])
             }
-            setForward(!forward)
+            // setForward(!forward)
         }
     }
 
@@ -45,7 +45,7 @@ export default function Footer({ sidebarWidth }) {
                 setTrackIndex(trackIndex - 1)
                 // console.log(trackArray[trackIndex - 1])
             }
-            setBackward(!backward)
+            // setBackward(!backward)
         }
     }
 

@@ -11,7 +11,15 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
+import {styled} from "@mui/material/styles";
+import ControlButton from "./ControlButton";
 
+
+export const ToggleIconButton = styled(IconButton)(({ theme }) => ({
+   '& 	.MuiButtonBase-root .Mui-focusVisible' : {
+       color: theme.palette.secondary.main
+   }
+}));
 
 export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, backward, skipBackward, forward, skipForward, isPlaying, togglePlayPause}) {
 
@@ -19,33 +27,33 @@ export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, 
     const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     const toggleRepeat = () => {
-        console.log('in toggle repeat: ', repeat)
+        if (!repeat) setShuffle(false)
         setRepeat(!repeat)
     }
 
     const toggleShuffle = () => {
+        if (!shuffle) setRepeat(false)
         setShuffle(!shuffle)
+
     }
 
     return (
-        <Grid display={"flex"} justifyContent={"center"} alignItems={'center'} gap={(mobileMatch ? 0.5 : 2)} color={'text.secondary'}>
-            <IconButton sx={{color: (shuffle ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleShuffle}>
+        <Grid display={"flex"} justifyContent={"center"} alignItems={'center'} gap={(mobileMatch ? 0.5 : 2)}>
+            <ControlButton active={shuffle} onClick={toggleShuffle}>
                 <ShuffleIcon fontSize={"small"} />
-            </IconButton>
-            <IconButton sx={{color: (backward ? 'secondary.main' : 'action.disabledBackground')}} onClick={skipBackward}>
+            </ControlButton>
+            <ControlButton active={false} onClick={skipBackward}>
                 <SkipPreviousIcon fontSize={"small"} />
-            </IconButton>
-            {/*<IconButton >*/}
-                <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause} size={'35px'}>
-                    {isPlaying ? <PauseIcon color={"primary"}/> : <PlayArrowIcon color={"primary"}/>}
-                </PlayPauseAction>
-            {/*</IconButton>*/}
-            <IconButton sx={{color: (forward ? 'secondary.main' : 'action.disabledBackground')}} onClick={skipForward}>
+            </ControlButton>
+            <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause} size={'35px'}>
+                {isPlaying ? <PauseIcon color={"primary"}/> : <PlayArrowIcon color={"primary"}/>}
+            </PlayPauseAction>
+            <ControlButton active={false} onClick={skipForward}>
                 <SkipNextIcon fontSize={"small"} />
-            </IconButton>
-            <IconButton sx={{color: (repeat ? 'secondary.main' : 'action.disabledBackground')}} onClick={toggleRepeat}>
+            </ControlButton>
+            <ControlButton active={repeat} onClick={toggleRepeat}>
                 <RepeatIcon fontSize={"small"} />
-            </IconButton>
+            </ControlButton>
         </Grid>
 
     )

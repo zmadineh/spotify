@@ -49,7 +49,6 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
             if (repeat) {
                 progressBar.current.value = 0
                 setCurrentTime(0)
-
                 audioPlayer.current.play();
             }
             else if (shuffle) {
