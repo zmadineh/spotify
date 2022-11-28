@@ -25,7 +25,7 @@ export default function ActionCard ({music}) {
 
     return (
         <Grid container gap={2} p={3}>
-            <PlayPauseAction color={"success.main"} onClick={handlePlayMusic}>
+            <PlayPauseAction color={"success.main"} onClick={handlePlayMusic} size={'50px'}>
                 { music.playing ? <PauseIcon color={"primary"}/> : <PlayArrowIcon  color={"primary"}/> }
             </PlayPauseAction>
             <IconButton sx={{color: "secondary.light"}} onClick={handleLikeClick}>

@@ -41,13 +41,15 @@ const musicsSlice = createSlice({
         handlePlay: (state, action) => {
 
             // add to recently played
-            const recentData = action.payload
-            const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
-            console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
-            if (repeatedDataIndex !== -1){
-                state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            }
-            state.data.recentlyPlayed.unshift(recentData)
+            // const recentData = action.payload
+            // const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
+            // // console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
+            // if (repeatedDataIndex !== -1){
+            //     state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+            // }
+            // state.data.recentlyPlayed.unshift(recentData)
+
+
 
             // toggle play track or playlist
             const type = action.payload.type;
@@ -63,6 +65,12 @@ const musicsSlice = createSlice({
                         firstTrack.pause = !firstTrack.pause;
                         newData.playing = !newData.playing;
                         newData.pause = !newData.pause;
+
+                        const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
+                        if (repeatedDataIndex !== -1){
+                            state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+                        }
+                        state.data.recentlyPlayed.unshift(firstTrack)
                     }
                 }
                 else if (type === 'track') {
@@ -74,6 +82,12 @@ const musicsSlice = createSlice({
                     }
                     newData.playing = !newData.playing;
                     newData.pause = !newData.pause;
+
+                    const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
+                    if (repeatedDataIndex !== -1){
+                        state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+                    }
+                    state.data.recentlyPlayed.unshift(newData)
                 }
             }
 
@@ -103,6 +117,12 @@ const musicsSlice = createSlice({
                         const currPlaying = state.data.playing;
                         currPlaying.playlist = newData.id;
                         currPlaying.track= firstTrack.id;
+
+                        const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
+                        if (repeatedDataIndex !== -1){
+                            state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+                        }
+                        state.data.recentlyPlayed.unshift(firstTrack)
                     }
                 }
                 else if (type === 'track'){
@@ -124,6 +144,12 @@ const musicsSlice = createSlice({
                         currPlaying.playlist = 0;
                         currPlaying.track= newData.id;
                     }
+
+                    const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
+                    if (repeatedDataIndex !== -1){
+                        state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
+                    }
+                    state.data.recentlyPlayed.unshift(newData)
                 }
             }
         },

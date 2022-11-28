@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
 
-import {getPlaylistById} from "../../../helper/getData";
 import useImageColor from "../../../helper/useImageColor";
 import {MusicMainGrid} from "../../../component/playlist/MusicMainGrid";
 import MusicPageHeader from "../../../component/playlist/MusicPageHeader";
 import ActionCard from "../../../component/playlist/ActionCard";
+import TrackTable from "../../../component/track/TrackTable";
 
 import Grid from "@mui/material/Grid";
-import TrackTable from "../../../component/track/TrackTable";
-import {useDispatch, useSelector} from "react-redux";
-
 
 export default function music () {
 

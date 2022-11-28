@@ -6,7 +6,7 @@ import {useState} from "react";
 
 const sidebarWidth = 250;
 const navbarHeight = 70;
-const footerHeight = 80;
+const footerHeight = 93;
 
 export default function Layout({ children }) {
 

@@ -44,15 +44,15 @@ export default function TrackTable ({music, type}) {
 
     return (
         <TableContainer>
-            <Table sx={{backgroundColor: '#00000003', padding: ' 0 20px', borderCollapse: 'separate', border: 0}} >
+            <Table sx={{padding: ' 0 20px', borderCollapse: 'separate', border: 0}} >
                 <colgroup>
-                    <col style={{width:'4%'}}/>
+                    <col style={{width: '4%'}}/>
                     <col style={{width: {tablet: '89%', medium: '54%', laptop: '40%' }}}/>
                     <col style={{width: {tablet: '0%', medium: '35%', laptop: '27%'  }}}/>
                     <col style={{width: {medium: '0%', laptop: '22%'  }}}/>
-                    <col style={{width:'2%'}}/>
-                    <col style={{width:'3%'}}/>
-                    <col style={{width: {tablet: '0%', medium: '2%'}}}/>
+                    <col style={{width: '2%'}}/>
+                    <col style={{width: '3%'}}/>
+                    <col style={{width: '2%'}}/>
                 </colgroup>
                 <TableHead>
                     <TableRow>
@@ -65,7 +65,7 @@ export default function TrackTable ({music, type}) {
                         {!tabletMatch && <HeaderTableCell align="center"></HeaderTableCell>}
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                     {tracks.map((track, index) => (
                         <TrackRow
                             key={track.id}

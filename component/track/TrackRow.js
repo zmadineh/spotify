@@ -26,14 +26,14 @@ export default function TrackRow ({track, index, handleLikeClicked, handleMusicC
 
 
     const handlePausePlayIcon = (track, index) => {
-        if(track.playing || track.pause)
+        if(track.playing || track.pause || displayIcon)
             return <PlayArrowIcon />
         else return index+1
     }
 
     return (
         <TableRow
-            sx={{cursor: "pointer", "&:hover" : {backgroundColor: 'background.tableRowHover'},}}
+            sx={{cursor: "pointer", "&:hover" : {backgroundColor: 'background.tableRowHover'}}}
             onMouseEnter={() => setDisplayIcon(true)}
             onMouseLeave={() => setDisplayIcon(false)}
         >

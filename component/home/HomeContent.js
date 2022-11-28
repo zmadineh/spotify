@@ -16,7 +16,8 @@ export default function HomeContent() {
 
     return (
         <MainContentGrid item container flexDirection={'column'} color={'text.primary'} p={2} gap={2}
-                         sx={{marginTop: '70px', marginBottom: '80px', width: '100%'}}>
+                         sx={{marginTop: '70px', marginBottom: '93px', width: '100%'}}
+        >
             <Grid>
                 <Cards title={'Recently played'} showMore={showMore} data={recentData} />
             </Grid>

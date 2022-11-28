@@ -123,6 +123,10 @@ export const theme = createTheme({
 
         skeleton: '#e0e0e0',
 
+        progress: {
+            main: '#696969',
+        },
+
         background: {
             default:'#000000',
             secondary: '#161616',
