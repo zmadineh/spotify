@@ -3,7 +3,7 @@ import {TrackSlider} from "./TrackSlider";
 
 import Grid from "@mui/material/Grid";
 
-export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, track, audioPlayer, togglePlayPause}) {
+export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, track, audioPlayer, togglePlayPause, handleShuffle}) {
 
     // states
     const [src, setSrc] = useState("");
@@ -52,8 +52,18 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
 
                 audioPlayer.current.play();
             }
-            else
+            else if (shuffle) {
                 togglePlayPause();
+                handleShuffle();
+                setIsPlaying(true)
+                progressBar.current.value = 0
+                setCurrentTime(0)
+                audioPlayer.current.play();
+            }
+            else {
+                togglePlayPause();
+            }
+
         }
         else {
             progressBar.current.value = time

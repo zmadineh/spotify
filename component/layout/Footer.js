@@ -14,6 +14,7 @@ export default function Footer({ sidebarWidth }) {
 
     const [forward, setForward] = useState(false)
     const [backward, setBackward] = useState(false)
+    const [shuffle, setShuffle] = useState(false)
 
     let current = trackData.find(track => track.playing || track.pause);
     let emptyMusic = current === undefined ;
@@ -31,7 +32,7 @@ export default function Footer({ sidebarWidth }) {
             if (trackIndex+1 < trackArray.length && !forward) {
                 dispatch(handlePlay(trackArray[trackIndex + 1]))
                 setTrackIndex(trackIndex + 1)
-                console.log(trackArray[trackIndex + 1])
+                // console.log(trackArray[trackIndex + 1])
             }
             setForward(!forward)
         }
@@ -42,10 +43,22 @@ export default function Footer({ sidebarWidth }) {
             if (trackIndex-1 > -1 && !backward) {
                 dispatch(handlePlay(trackArray[trackIndex - 1]))
                 setTrackIndex(trackIndex - 1)
-                console.log(trackArray[trackIndex - 1])
+                // console.log(trackArray[trackIndex - 1])
             }
             setBackward(!backward)
         }
+    }
+
+    const handleShuffle = () => {
+        if(!emptyMusic) {
+            const randomIndex = Math.floor(Math.random() * trackArray.length);
+            if (shuffle) {
+                dispatch(handlePlay(trackArray[randomIndex]))
+                setTrackIndex(randomIndex)
+                console.log(shuffle, trackArray[randomIndex])
+            }
+        }
+        console.log('shuffle ', shuffle)
     }
 
     return (
@@ -55,7 +68,8 @@ export default function Footer({ sidebarWidth }) {
                 <FooterTrackCard
                     currentTrack={currentTrack}
                     handleLikeClick={handleLikeClick}
-                    maxWidth={sidebarWidth}/>
+                    maxWidth={sidebarWidth}
+                />
             </Grid>
 
             <Grid item mobile={4} tablet={6} laptop={6} display={"flex"} justifyContent={"center"}>
@@ -64,7 +78,11 @@ export default function Footer({ sidebarWidth }) {
                     skipForward={skipForward}
                     forward={forward}
                     backward={backward}
-                    skipBackward={skipBackward}/>
+                    skipBackward={skipBackward}
+                    shuffle={shuffle}
+                    setShuffle={setShuffle}
+                    handleShuffle={handleShuffle}
+                />
             </Grid>
 
             <Grid item mobile={4} tablet={3} laptop={3} display={"flex"} justifyContent={"flex-end"}>

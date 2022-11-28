@@ -8,7 +8,7 @@ import {useTheme} from "@mui/material/styles";
 import {useMediaQuery} from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-export default function AudioPlayer ({track, forward, backward, skipForward, skipBackward}) {
+export default function AudioPlayer ({track, forward, backward, skipForward, skipBackward, shuffle, setShuffle, handleShuffle}) {
 
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -17,7 +17,6 @@ export default function AudioPlayer ({track, forward, backward, skipForward, ski
     // state
     const [isPlaying, setIsPlaying] = useState(false);
     const [repeat, setRepeat] = useState(false)
-    const [shuffle, setShuffle] = useState(false)
 
     // references
     const audioPlayer = useRef();   // reference our audio component
@@ -53,6 +52,7 @@ export default function AudioPlayer ({track, forward, backward, skipForward, ski
                 repeat={repeat}
                 shuffle={shuffle}
                 togglePlayPause={togglePlayPause}
+                handleShuffle={handleShuffle}
             />
         </Grid>
     )
