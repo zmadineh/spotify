@@ -1,9 +1,11 @@
-import {MainContentGrid} from "./MainContentGrid";
+import {useSelector} from "react-redux";
+
 import {getCategories} from "../../helper/getData";
+import {MainContentGrid} from "./MainContentGrid";
 import CardsList from "./card/CardsList";
 import Cards from "./card/Cards";
+
 import Grid from "@mui/material/Grid";
-import {useSelector} from "react-redux";
 
 export default function HomeContent() {
 
