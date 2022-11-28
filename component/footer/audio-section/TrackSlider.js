@@ -26,5 +26,4 @@ export const TrackSlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-rail': {
         opacity: 0.28,
     },
-
 }));

@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {handleLike, handlePlay} from "../../redux/slices/musics.slice";
 import FooterTrackCard from "../footer/FooterTrackCard";
-import AudioPlayer from "../common/audio-section/AudioPlayer";
+import AudioPlayer from "../footer/audio-section/AudioPlayer";
 import {emptyTrack} from "../../data/music-data/emptyTrack";
 
 import Grid from "@mui/material/Grid";
@@ -32,9 +32,7 @@ export default function Footer({ sidebarWidth }) {
             if (trackIndex+1 < trackArray.length && !forward) {
                 dispatch(handlePlay(trackArray[trackIndex + 1]))
                 setTrackIndex(trackIndex + 1)
-                // console.log(trackArray[trackIndex + 1])
             }
-            // setForward(!forward)
         }
     }
 
@@ -43,9 +41,7 @@ export default function Footer({ sidebarWidth }) {
             if (trackIndex-1 > -1 && !backward) {
                 dispatch(handlePlay(trackArray[trackIndex - 1]))
                 setTrackIndex(trackIndex - 1)
-                // console.log(trackArray[trackIndex - 1])
             }
-            // setBackward(!backward)
         }
     }
 

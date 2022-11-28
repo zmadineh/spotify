@@ -1,5 +1,5 @@
 import React from 'react'
-import PlayPauseAction from "../PlayPauseAction";
+import PlayPauseAction from "../../common/PlayPauseAction";
 
 import {useTheme} from "@mui/material/styles";
 import {useMediaQuery} from "@mui/material";
@@ -15,11 +15,8 @@ import {styled} from "@mui/material/styles";
 import ControlButton from "./ControlButton";
 
 
-export const ToggleIconButton = styled(IconButton)(({ theme }) => ({
-   '& 	.MuiButtonBase-root .Mui-focusVisible' : {
-       color: theme.palette.secondary.main
-   }
-}));
+
+
 
 export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, backward, skipBackward, forward, skipForward, isPlaying, togglePlayPause}) {
 
@@ -48,7 +45,7 @@ export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, 
             <PlayPauseAction color={"secondary.main"} onClick={togglePlayPause} size={'35px'}>
                 {isPlaying ? <PauseIcon color={"primary"}/> : <PlayArrowIcon color={"primary"}/>}
             </PlayPauseAction>
-            <ControlButton active={false} onClick={skipForward}>
+            <ControlButton onClick={skipForward}>
                 <SkipNextIcon fontSize={"small"} />
             </ControlButton>
             <ControlButton active={repeat} onClick={toggleRepeat}>

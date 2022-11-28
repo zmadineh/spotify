@@ -71,7 +71,7 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
     }
 
     return (
-        <Grid display={"flex"} justifyContent={"center"}  alignItems={'flex-end'} width={'100%'}>
+        <Grid display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={'flex-end'} width={'100%'}>
             <audio
                 ref={audioPlayer}
                 onTimeUpdate={getCurrDuration}
@@ -82,7 +82,7 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
                 preload="metadata">
             </audio>
 
-            <Grid container justifyContent={"center"} alignItems={"center"} spacing={2}>
+            <Grid container justifyContent={"center"} alignItems={"center"} spacing={2} m={'-11px'}>
                 <Grid item>{calculateTime(currentTime)}</Grid>
                 <Grid item display={"flex"} alignItems={"center"} mobile={8}>
 
