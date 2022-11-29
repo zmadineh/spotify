@@ -3,10 +3,10 @@ import {TrackSlider} from "./TrackSlider";
 
 import Grid from "@mui/material/Grid";
 
-export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, track, audioPlayer, togglePlayPause, handleShuffle}) {
+export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, track, audioPlayer, togglePlayPause, handleShuffle, skipForward}) {
 
     // states
-    const [src, setSrc] = useState("");
+    const [src, setSrc] = useState(track.src);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
@@ -14,8 +14,6 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
     const progressBar = useRef();   // reference our progress bar
 
     useEffect(() => {
-        setCurrentTime(0)
-        audioPlayer.current.currentTime = 0
 
         setIsPlaying(track.playing)
         setSrc(track.src)
@@ -25,7 +23,10 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
         progressBar.current.max = seconds;
 
         if (track.playing)
-            audioPlayer.current.play();
+            audioPlayer.current.play().then(function() {
+        }).catch(function(error) {
+            console.log('The play() Promise rejected!', error);})
+
         else if (track.pause)
             audioPlayer.current.pause();
 
@@ -48,28 +49,33 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
         const time = e.currentTarget.currentTime
 
         if(time === audioPlayer.current.duration) {
+            progressBar.current.value = 0
+            setCurrentTime(0)
+
             if (repeat) {
-                progressBar.current.value = 0
-                setCurrentTime(0)
                 audioPlayer.current.play();
             }
             else if (shuffle) {
                 togglePlayPause();
                 handleShuffle();
                 setIsPlaying(true)
-                progressBar.current.value = 0
-                setCurrentTime(0)
                 audioPlayer.current.play();
             }
             else {
                 togglePlayPause();
+                const next = skipForward();
+                if(next)
+                    audioPlayer.current.play();
+                else
+                    audioPlayer.current.pause();
+                console.log('skip')
             }
         }
         else {
             progressBar.current.value = time
             setCurrentTime(time.toFixed(2))
         }
-    },[]);
+    },[repeat, shuffle, track]);
 
     return (
         <Grid display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={'flex-end'} width={'100%'}>
@@ -94,8 +100,8 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
                         ref={progressBar}
                         onChange={onChange}
                         defaultValue={0}
-                        value={currentTime}
-                        max={Number(duration)}
+                        value={(currentTime ? currentTime : 0)}
+                        max={(duration ? duration : 0)}
                         color={"progress"}
                         size={"medium"}
                     />

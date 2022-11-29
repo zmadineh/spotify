@@ -6,9 +6,11 @@ import sadHourImg from '../../public/image/track-image/sad-hour.jpg';
 import peacefulPianoImg from '../../public/image/track-image/peaceful-piano.jpg';
 import deepFocusImg from '../../public/image/track-image/deep-focus.jpg';
 import instrumentalStudyImg from '../../public/image/track-image/instrumental-study.jpg';
+import {emptyTrack} from "./emptyTrack";
 
 export const trackData =
     [
+        emptyTrack,
         {
             id: 1,
             category_id: 2,
@@ -23,7 +25,7 @@ export const trackData =
             imagePath: '/image/track-image/today-top-hit.jpg',
             favorite: false,
             playing: false,
-            pause: true,
+            pause: false,
             src: "https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3",
         },
         {
@@ -58,8 +60,7 @@ export const trackData =
             favorite: false,
             playing: false,
             pause: false,
-            // src: "https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3",
-            src: "../../public/tracks/music.mp3",
+            src: "/tracks/music.mp3",
         },
         {
             id: 4,

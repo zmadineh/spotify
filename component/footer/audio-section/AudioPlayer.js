@@ -15,17 +15,10 @@ export default function AudioPlayer ({track, audioPlayer, forward, backward, ski
     const [repeat, setRepeat] = useState(false)
 
     const togglePlayPause = useCallback(() => {
-
-        console.log(track.playing, track.pause)
-
-        if (track.playing) {
-            audioPlayer.current.pause();
+        if (track.playing)
             dispatch(pauseTrack(track)) ;
-        }
-        else if(track.pause) {
-            audioPlayer.current.play();
+        else if(track.pause)
             dispatch(playTrack(track))
-        }
         setIsPlaying(!isPlaying);
 
     }, [track]);
@@ -53,6 +46,7 @@ export default function AudioPlayer ({track, audioPlayer, forward, backward, ski
                 shuffle={shuffle}
                 togglePlayPause={togglePlayPause}
                 handleShuffle={handleShuffle}
+                skipForward={skipForward}
             />
         </Grid>
     )

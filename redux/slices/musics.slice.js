@@ -3,14 +3,12 @@ import {trackData} from "../../data/music-data/track.data";
 import {playlistsData} from "../../data/music-data/playlists.data";
 
 const playingData = {
-    playlist: 1, // playlist id
-    track: 1, // track id
+    playlist: 0, // playlist id
+    track: 0, // track id
 }
 
-const recentlyPlayed = [
-    trackData[0],
-    // {type: 'track', id: 1},
-]
+const recentlyPlayed = []
+
 
 const initialState = {
     isReceived: false,
@@ -147,113 +145,9 @@ const musicsSlice = createSlice({
             }
         },
 
-        handlePlay: (state, action) => {
-            // toggle play track or playlist
-            // const type = action.payload.type;
-            // const payload = action.payload;
-            // const newData = state.data[type].find(item => item.id === payload.id)
-            //
-            // if (newData.id === state.data.playing[type]) {
-            //     if (type === 'playlist') {
-            //         const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
-            //         if (newTracks.length > 0) {
-            //             const firstTrack = newTracks[0]
-            //             firstTrack.playing = !firstTrack.playing;
-            //             firstTrack.pause = !firstTrack.pause;
-            //             newData.playing = !newData.playing;
-            //             newData.pause = !newData.pause;
-            //
-            //             const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
-            //             if (repeatedDataIndex !== -1){
-            //                 state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            //             }
-            //             state.data.recentlyPlayed.unshift(firstTrack)
-            //         }
-            //     }
-            //     else if (type === 'track') {
-            //         console.log('current track received')
-            //         const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
-            //         if(newPlaylist) {
-            //             newPlaylist.playing = !newPlaylist.playing;
-            //             newPlaylist.pause = !newPlaylist.pause;
-            //         }
-            //         newData.playing = !newData.playing;
-            //         newData.pause = !newData.pause;
-            //
-            //         const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
-            //         if (repeatedDataIndex !== -1){
-            //             state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            //         }
-            //         state.data.recentlyPlayed.unshift(newData)
-            //     }
-            // }
-            //
-            // else if (newData) {
-            //     const prevPlayingTrackId = state.data.playing['track'];
-            //     const prevPlayingPlaylistId = state.data.playing['playlist'];
-            //     const prevTrack = state.data.track.find(track => track.id === prevPlayingTrackId)
-            //     const prevPlaylist = state.data.playlist.find(playlist => playlist.id === prevPlayingPlaylistId)
-            //     if (prevTrack) {
-            //         prevTrack.playing = false;
-            //         prevTrack.pause = false;
-            //     }
-            //     if (prevPlaylist) {
-            //         prevPlaylist.playing = false;
-            //         prevPlaylist.pause = false;
-            //     }
-            //
-            //     if (type === 'playlist') {
-            //         const newTracks = state.data.track.filter(track => track.playlist_id === newData.id)
-            //         if (newTracks.length > 0) {
-            //             const firstTrack = newTracks[0]
-            //             firstTrack.playing = true;
-            //             firstTrack.pause = false;
-            //             newData.playing = true;
-            //             newData.pause = false;
-            //
-            //             const currPlaying = state.data.playing;
-            //             currPlaying.playlist = newData.id;
-            //             currPlaying.track= firstTrack.id;
-            //
-            //             const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === firstTrack.id && item.type === firstTrack.type)
-            //             if (repeatedDataIndex !== -1){
-            //                 state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            //             }
-            //             state.data.recentlyPlayed.unshift(firstTrack)
-            //         }
-            //     }
-            //     else if (type === 'track'){
-            //         const newPlaylist = state.data.playlist.find(playlist => playlist.id === newData.playlist_id)
-            //         const currPlaying = state.data.playing;
-            //         if(newPlaylist) {
-            //             newPlaylist.playing = true;
-            //             newPlaylist.pause = false;
-            //             newData.playing = true;
-            //             newData.pause = false;
-            //
-            //             currPlaying.playlist = newPlaylist.id;
-            //             currPlaying.track= newData.id;
-            //         }
-            //         else {
-            //             newData.playing = true;
-            //             newData.pause = false;
-            //
-            //             currPlaying.playlist = 0;
-            //             currPlaying.track= newData.id;
-            //         }
-            //
-            //         const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === newData.id && item.type === newData.type)
-            //         if (repeatedDataIndex !== -1){
-            //             state.data.recentlyPlayed.splice(repeatedDataIndex, 1)
-            //         }
-            //         state.data.recentlyPlayed.unshift(newData)
-            //     }
-            // }
-        },
-
         addRecent: (state, action) => {
             const recentData = action.payload
-            if (recentData.type === 'track')
+            if (recentData.type === 'track' && recentData.id !== 0)
             {
                 const repeatedDataIndex = state.data.recentlyPlayed.findIndex(item => item.id === recentData.id && item.type === recentData.type)
                 console.log('add recent dispatch: ', repeatedDataIndex, state.data.recentlyPlayed)
@@ -268,7 +162,6 @@ const musicsSlice = createSlice({
 
 export const {
     handleLike,
-    handlePlay,
     pauseTrack,
     pausePlaylist,
     playPlaylist,

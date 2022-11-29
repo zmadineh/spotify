@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid";
 
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -13,6 +13,10 @@ export default function VolumeSlider ({ audioPlayer }) {
 
     // states
     const [currentVolume, setCurrentVolume] = useState(20);
+
+    useEffect(() => {
+        audioPlayer.current.volume = currentVolume / 100
+    })
 
     const onChange = (e) => {
         audioPlayer.current.volume = e.target.value / 100
