@@ -100,7 +100,10 @@ export default function FooterContent({ sidebarWidth }) {
 
     const handleShuffle = useCallback( () => {
         if(currentTrack.id !== emptySongId) {
-            const randomIndex = Math.floor(Math.random() * trackArray.length);
+            let randomIndex = Math.floor(Math.random() * trackArray.length);
+            while(randomIndex === trackIndex){
+                randomIndex = Math.floor(Math.random() * trackArray.length);
+            }
             if (shuffle) {
                 dispatch(playTrack(trackArray[randomIndex]))
             }
