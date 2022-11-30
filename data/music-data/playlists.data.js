@@ -6,6 +6,7 @@ import sadHourImg from '../../public/image/track-image/sad-hour.jpg';
 import peacefulPianoImg from '../../public/image/track-image/peaceful-piano.jpg';
 import deepFocusImg from '../../public/image/track-image/deep-focus.jpg';
 import instrumentalStudyImg from '../../public/image/track-image/instrumental-study.jpg';
+import chillLofiStudyBeats from '../../public/image/track-image/chill-lofi-study-beats.jpg';
 
 export const playlistsData =
     [
@@ -108,6 +109,19 @@ export const playlistsData =
             information: 'Focus with soft study music in the background',
             image: instrumentalStudyImg,
             imagePath: '/image/track-image/instrumental-study.jpg',
+            favorite: false,
+            playing: false,
+            pause: false,
+            type: 'playlist',
+        },
+        {
+            id: 9,
+            category_id: 4,
+            playlist: 'chill lofi study beats',
+            title: 'Chill lofi study beats',
+            information: 'The perfect study beats. Find your focus, crush your productivity.',
+            image: chillLofiStudyBeats,
+            imagePath: '/image/track-image//chill-lofi-study-beats.jpg',
             favorite: false,
             playing: false,
             pause: false,

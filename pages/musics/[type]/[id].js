@@ -32,7 +32,7 @@ export default function music () {
 
     return (
         <MusicMainGrid item container color={dominantColor} flexDirection={'column'} height={'100%'} gap={4} sx={{marginBottom: '80px'}} pt={'70px'}>
-            <MusicPageHeader image={item.image} title={item.title} description={type === 'track' ? item.singer : item.information}/>
+            <MusicPageHeader image={item.image} title={item.title} description={type === 'track' ? item.singer : item.information} type={item.type}/>
             <Grid container sx={{backgroundColor: 'secondary.lighter'}}>
                 <ActionCard music={item} />
                 <TrackTable music={item} type={type} />
