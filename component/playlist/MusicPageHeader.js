@@ -11,8 +11,8 @@ export default function MusicPageHeader ({image, title, description, type}) {
             </Grid>
             <Grid item alignItems={"baseline"}>
                 <Typography variant={"body2"} noWrap textOverflow={'ellipsis'}>{type.toUpperCase()}</Typography>
-                <Typography variant={"h1"} noWrap textOverflow={'ellipsis'} width={'100%'}>{title}</Typography>
-                <Typography variant={"h6"} noWrap textOverflow={'ellipsis'} width={'90%'}>{description}</Typography>
+                <Typography variant={"h1"} noWrap textOverflow={'ellipsis'}>{title}</Typography>
+                <Typography variant={"h6"} noWrap textOverflow={'ellipsis'}>{description}</Typography>
             </Grid>
         </Grid>
     )

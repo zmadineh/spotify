@@ -31,7 +31,7 @@ export default function music () {
     },[colors])
 
     return (
-        <MusicMainGrid item container color={dominantColor} flexDirection={'column'} height={'100%'} gap={4} sx={{marginBottom: '80px'}} pt={'70px'}>
+        <MusicMainGrid item container color={dominantColor} flexDirection={'column'} height={'100%'} gap={4} sx={{marginBottom: '93px'}} pt={'70px'} overflow={"scroll"}>
             <MusicPageHeader image={item.image} title={item.title} description={type === 'track' ? item.singer : item.information} type={item.type}/>
             <Grid container sx={{backgroundColor: 'secondary.lighter'}}>
                 <ActionCard music={item} />

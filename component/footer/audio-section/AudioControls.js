@@ -32,9 +32,11 @@ export default function AudioControls (props) {
 
     return (
         <Grid display={"flex"} justifyContent={"center"} alignItems={'center'} gap={(mobileMatch ? 0.5 : 2)}>
-            <ControlButton active={shuffle} onClick={toggleShuffle}>
-                <ShuffleIcon fontSize={"small"} />
-            </ControlButton>
+            {!mobileMatch &&
+                <ControlButton active={shuffle} onClick={toggleShuffle}>
+                    <ShuffleIcon fontSize={"small"}/>
+                </ControlButton>
+            }
             <ControlButton active={false} onClick={skipBackward}>
                 <SkipPreviousIcon fontSize={"small"} />
             </ControlButton>
@@ -44,9 +46,11 @@ export default function AudioControls (props) {
             <ControlButton onClick={skipForward}>
                 <SkipNextIcon fontSize={"small"} />
             </ControlButton>
-            <ControlButton active={repeat} onClick={toggleRepeat}>
-                <RepeatIcon fontSize={"small"} />
-            </ControlButton>
+            {!mobileMatch &&
+                <ControlButton active={repeat} onClick={toggleRepeat}>
+                    <RepeatIcon fontSize={"small"} />
+                </ControlButton>
+            }
         </Grid>
 
     )

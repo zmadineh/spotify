@@ -10,8 +10,8 @@ export default function TrackCard ({track, size='40px', align='center', fontSize
                 <Image src={track.image} alt={'track image'} style={{width: size, height: size, borderRadius: '2px'}}/>
             </Grid>
             <Grid item display={"flex"} flexDirection={"column"}>
-                <Typography variant={fontSize1}>{track.title}</Typography>
-                <Typography variant={fontSize2}>{track.singer}</Typography>
+                <Typography variant={fontSize1} noWrap textOverflow={"ellipsis"}>{track.title}</Typography>
+                <Typography variant={fontSize2} noWrap textOverflow={"ellipsis"}>{track.singer}</Typography>
             </Grid>
         </Grid>
     )

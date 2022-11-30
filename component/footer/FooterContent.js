@@ -12,11 +12,15 @@ import TrackModalContent from "../track/modal/TrackModalContent";
 import AudioControls from "./audio-section/AudioControls";
 import AudioSlider from "./audio-section/AudioSlider";
 import TrackCard from "../track/TrackCard";
+import {useMediaQuery} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
+const emptySongId = 0;
 
 export default function FooterContent({ sidebarWidth }) {
 
     const dispatch = useDispatch();
-    const emptySongId = 0;
+    const theme = useTheme();
+    const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))
 
     // data
     const trackData = useSelector((state) => state.musics.data['track']);
@@ -165,7 +169,7 @@ export default function FooterContent({ sidebarWidth }) {
                 preload="metadata">
             </audio>
 
-            <Grid item mobile={4} tablet={3} laptop={3} p={1}>
+            <Grid item mobile={6} tablet={3} laptop={3} p={1}>
                 <FooterTrackCard
                     currentTrack={currentTrack}
                     handleLikeClick={handleLikeClick}
@@ -174,17 +178,18 @@ export default function FooterContent({ sidebarWidth }) {
                 />
             </Grid>
 
-            <Grid item mobile={4} tablet={6} laptop={6} display={"flex"} justifyContent={"center"}>
+            <Grid item mobile={6} tablet={6} laptop={6} display={"flex"} justifyContent={"center"}>
                 <Grid width={'100%'} p={1}>
                     <AudioControls {...audioProps} />
                     <AudioSlider audioPlayer={audioPlayer} progressBar={progressBar} {...audioProps}/>
                 </Grid>
             </Grid>
 
-            <Grid item mobile={4} tablet={3} laptop={3} display={"flex"} justifyContent={"flex-end"}>
-                <VolumeSlider audioPlayer={audioPlayer} />
-            </Grid>
-
+            {!mobileMatch &&
+                <Grid item tablet={3} laptop={3} display={"flex"} justifyContent={"flex-end"}>
+                    <VolumeSlider audioPlayer={audioPlayer}/>
+                </Grid>
+            }
             <TrackModal open={openModal} dominantColor={dominantColor} toggleOpenModal={toggleOpenModal} onCloseModal={onCloseModal}>
 
                 <TrackModalContent
