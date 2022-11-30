@@ -64,7 +64,7 @@ export default function FooterContent({ sidebarWidth }) {
     const handleLikeClick = useCallback((track) => {
         if (currentTrack.id !== emptySongId)
             dispatch(handleLike(track))
-    }, []);
+    }, [currentTrack]);
 
     const togglePlayPause = useCallback(() => {
         if(currentTrack.id !== emptySongId) {
@@ -105,7 +105,7 @@ export default function FooterContent({ sidebarWidth }) {
                 dispatch(playTrack(trackArray[randomIndex]))
             }
         }
-    },[]);
+    },[currentTrack]);
 
     const setCurrentTimeToProgress = useCallback((e) => {
         const time = e.currentTarget.currentTime

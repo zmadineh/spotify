@@ -20,7 +20,7 @@ export default function FooterTrackCard({currentTrack, handleLikeClick, maxWidth
 
     return (
         <Grid container item alignItems={"center"} justifyContent={"space-between"} maxWidth={maxWidth}>
-            <Grid item width={'60%'} onClick={toggleOpenModal}> <TrackCard track={currentTrack}/> </Grid>
+            <Grid item width={'60%'} sx={{cursor: 'pointer'}} onClick={toggleOpenModal}> <TrackCard track={currentTrack}/> </Grid>
             { mediumMatch &&
                 <Grid item width={'40%'} display={"flex"}>
                     <IconButton sx={{color: "secondary.light"}} onClick={() => handleLikeClick(currentTrack)}>
