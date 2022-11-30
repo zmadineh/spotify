@@ -74,7 +74,7 @@ export default function TrackTable ({music, type}) {
                         {!mediumMatch && <HeaderTableCell><TableHeaderCell>DATE ADDED</TableHeaderCell></HeaderTableCell>}
                         <HeaderTableCell align="center"></HeaderTableCell>
                         <HeaderTableCell align="center"><TableHeaderCell><AccessTimeIcon /></TableHeaderCell></HeaderTableCell>
-                        {!tabletMatch && <HeaderTableCell align="center"></HeaderTableCell>}
+                        <HeaderTableCell align="center"></HeaderTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody >
