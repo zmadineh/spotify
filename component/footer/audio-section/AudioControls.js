@@ -13,7 +13,9 @@ import PauseIcon from '@mui/icons-material/Pause';
 import Grid from "@mui/material/Grid";
 
 
-export default function AudioControls ({repeat, setRepeat, shuffle, setShuffle, backward, skipBackward, forward, skipForward, isPlaying, togglePlayPause}) {
+export default function AudioControls (props) {
+
+    const {isPlaying, skipForward, skipBackward, repeat, setRepeat, shuffle, setShuffle, togglePlayPause} = props
 
     const theme = useTheme();
     const mobileMatch = useMediaQuery(theme.breakpoints.down('tablet'))

@@ -28,7 +28,7 @@ export default function Navbar({decreaseWidth, setSidebarOpen, sidebarOpen}) {
               left={{mobile: 0, tablet: decreaseWidth}}
               p={1}
               height={'70px'} width={{mobile: '100%', tablet: `calc(100% - ${decreaseWidth}px)`}}
-              zIndex={2000}
+              zIndex={1150}
               sx={{backgroundColor: display ? 'background.navbarWithOpacity' : 'background.default'}}
         >
             {/*<Grid item mobile={1} gap={1}>*/}

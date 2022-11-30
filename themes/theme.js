@@ -133,6 +133,7 @@ export const theme = createTheme({
             lighter: '#FFFFFF1A',
             navbarWithOpacity: '#16161666',
             tableRowHover: '#59595933',
+            modalNav: '#FFFFFF03',
             mainGradient: "linear-gradient(180deg, #1E1E1E, #000000)",
         },
     },

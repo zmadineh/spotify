@@ -3,34 +3,32 @@ import {TrackSlider} from "./TrackSlider";
 
 import Grid from "@mui/material/Grid";
 
-export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, track, audioPlayer, togglePlayPause, handleShuffle, skipForward}) {
+export default function AudioSlider (props) {
 
-    // states
-    const [src, setSrc] = useState(track.src);
-    const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
-
-    // references
-    const progressBar = useRef();   // reference our progress bar
+    const {audioPlayer, currentTrack, src, setSrc , duration, setDuration, currentTime, setCurrentTime
+        , setIsPlaying, progressBar, skipForward, repeat, shuffle, handleShuffle, togglePlayPause} = props
 
     useEffect(() => {
 
-        setIsPlaying(track.playing)
-        setSrc(track.src)
+        console.log('slider useEffect : ', currentTime)
+
+        // progressBar.current.value = currentTime
+        setIsPlaying(currentTrack.playing)
+        setSrc(currentTrack.src)
 
         const seconds = Math.floor(audioPlayer.current.duration);
         setDuration(seconds);
         progressBar.current.max = seconds;
 
-        if (track.playing)
+        if (currentTrack.playing)
             audioPlayer.current.play().then(function() {
         }).catch(function(error) {
             console.log('The play() Promise rejected!', error);})
 
-        else if (track.pause)
+        else if (currentTrack.pause)
             audioPlayer.current.pause();
 
-    }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState, track]);
+    }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState, currentTrack]);
 
     const calculateTime = useCallback((secs) => {
         const minutes = Math.floor(secs / 60);
@@ -43,55 +41,14 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
     const onChange = useCallback((e) => {
         audioPlayer.current.currentTime = e.target.value
         progressBar.current.value =  audioPlayer.current.currentTime;
+        setCurrentTime(audioPlayer.current.currentTime)
     }, []);
 
-    const setCurrentTimeToProgress = useCallback((e) => {
-        const time = e.currentTarget.currentTime
-
-        if(time === audioPlayer.current.duration) {
-            progressBar.current.value = 0
-            setCurrentTime(0)
-
-            if (repeat) {
-                audioPlayer.current.play();
-            }
-            else if (shuffle) {
-                togglePlayPause();
-                handleShuffle();
-                setIsPlaying(true)
-                audioPlayer.current.play();
-            }
-            else {
-                togglePlayPause();
-                const next = skipForward();
-                if(next)
-                    audioPlayer.current.play();
-                else
-                    audioPlayer.current.pause();
-                console.log('skip')
-            }
-        }
-        else {
-            progressBar.current.value = time
-            setCurrentTime(time.toFixed(2))
-        }
-    },[repeat, shuffle, track]);
 
     return (
-        <Grid display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={'flex-end'} width={'100%'}>
-            <audio
-                ref={audioPlayer}
-                onTimeUpdate={setCurrentTimeToProgress}
-                onLoadedData={(e) => {
-                    setDuration(e.currentTarget.duration.toFixed(2))
-                }}
-                src={src}
-                preload="metadata">
-            </audio>
-
-            <Grid container justifyContent={"center"} alignItems={"center"} spacing={2} m={'-11px'}>
+        <Grid display={"flex"} alignItems={'center'} width={'100%'} gap={2}>
                 <Grid item>{calculateTime(currentTime)}</Grid>
-                <Grid item display={"flex"} alignItems={"center"} mobile={8}>
+                <Grid item display={"flex"} alignItems={"center"} width={'100%'}>
 
                     {/*<input type="range" defaultValue="0" ref={progressBar} onChange={onChange} style={{width: '100%', height: '5px'}}/>*/}
 
@@ -108,8 +65,7 @@ export default function AudioSlider ({isPlaying, setIsPlaying, repeat, shuffle, 
 
                     {/*<LinearProgress variant="determinate" ref={progressBar} onChange={changeRange} value={currentTime} color={"progress"}/>*/}
                 </Grid>
-                <Grid item>{(duration && !isNaN(duration)) && calculateTime(duration).toString()}</Grid>
-            </Grid>
+                <Grid item>{(duration && !isNaN(duration)) && calculateTime(duration)}</Grid>
         </Grid>
     )
 }

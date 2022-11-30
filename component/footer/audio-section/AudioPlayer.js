@@ -6,22 +6,10 @@ import AudioControls from "./AudioControls";
 
 import Grid from "@mui/material/Grid";
 
-export default function AudioPlayer ({track, audioPlayer, forward, backward, skipForward, skipBackward, shuffle, setShuffle, handleShuffle}) {
+export default function AudioPlayer (props) {
 
-    const dispatch = useDispatch();
-
-    // state
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [repeat, setRepeat] = useState(false)
-
-    const togglePlayPause = useCallback(() => {
-        if (track.playing)
-            dispatch(pauseTrack(track)) ;
-        else if(track.pause)
-            dispatch(playTrack(track))
-        setIsPlaying(!isPlaying);
-
-    }, [track]);
+    const {audioPlayer, currentTrack, isPlaying, setIsPlaying, forward, skipForward, backward,
+        skipBackward, repeat, setRepeat, shuffle, setShuffle, handleShuffle, togglePlayPause} = props
 
     return (
         <Grid width={'100%'} p={1}>
@@ -39,7 +27,7 @@ export default function AudioPlayer ({track, audioPlayer, forward, backward, ski
             />
             <AudioSlider
                 audioPlayer={audioPlayer}
-                track={track}
+                track={currentTrack}
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
                 repeat={repeat}

@@ -35,9 +35,9 @@ export default function VolumeSlider ({ audioPlayer }) {
     }
 
     return (
-            <Grid container justifyContent={"center"} alignItems={"center"} spacing={1} width={'90%'}>
+            <Grid display={"flex"} alignItems={"center"} justifyContent={"flex-end"} width={'100%'} gap={1} p={2}>
                 <Grid item>{volumeIconChanger()}</Grid>
-                <Grid item display={"flex"} alignItems={"center"} mobile={8}>
+                <Grid item display={"flex"} alignItems={"center"} width={'100%'} maxWidth={'180px'}>
                     <Slider
                         aria-label="Volume"
                         onChange={onChange}
