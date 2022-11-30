@@ -111,7 +111,7 @@ export default function FooterContent({ sidebarWidth }) {
         const time = e.currentTarget.currentTime
 
         // console.log('time: ', Math.floor(time), duration, e.currentTarget.currentTime)
-        if(time === e.currentTarget.currentTime) {
+        if(time === e.currentTarget.duration) {
             progressBar.current.value = 0
             setCurrentTime(0)
 
