@@ -19,13 +19,13 @@ export default function Layout({ children }) {
             </Grid>
 
             <Grid item container>
-                <Grid container item sx={{display: {mobile: 'none', tablet: 'flex'}}} >
+                <Grid container item sx={{display: {mobile: 'none', medium: 'flex'}}} >
                     <Sidebar sidebarOpen={sidebarOpen} sidebarWidth={sidebarWidth}/>
                 </Grid>
                 <Grid container item
-                      ml={{mobile: '0px', tablet: `${sidebarWidth}px`}}
+                      ml={{mobile: '0px', medium: `${sidebarWidth}px`}}
                       mt={`${navbarHeight}`}
-                      width={{mobile: '100%', tablet: `calc(100% - ${sidebarWidth}px)`}}>
+                      width={{mobile: '100%', medium: `calc(100% - ${sidebarWidth}px)`}}>
                     {children}
                 </Grid>
             </Grid>

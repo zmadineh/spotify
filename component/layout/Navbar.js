@@ -25,9 +25,9 @@ export default function Navbar({decreaseWidth, setSidebarOpen, sidebarOpen}) {
     return (
         <Grid container justifyContent={"space-around"} alignItems={"center"}
               position={"fixed"} top={0}
-              left={{mobile: 0, tablet: decreaseWidth}}
+              left={{mobile: 0, medium: decreaseWidth}}
               p={1}
-              height={'70px'} width={{mobile: '100%', tablet: `calc(100% - ${decreaseWidth}px)`}}
+              height={'70px'} width={{mobile: '100%', medium: `calc(100% - ${decreaseWidth}px)`}}
               zIndex={1150}
               sx={{backgroundColor: display ? 'background.navbarWithOpacity' : 'background.default'}}
         >
