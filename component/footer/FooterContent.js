@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {handleLike, pauseTrack, playTrack} from "../../redux/slices/musics.slice";
+import {addRecent, handleLike, pauseTrack, playTrack} from "../../redux/slices/musics.slice";
 import FooterTrackCard from "../footer/FooterTrackCard";
 import AudioPlayer from "../footer/audio-section/AudioPlayer";
 import VolumeSlider from "./volume-section/VolumeSlider";
@@ -81,6 +81,7 @@ export default function FooterContent({ sidebarWidth }) {
         if (currentTrack.id !== emptySongId) {
             if (trackIndex+1 < trackArray.length) {
                 dispatch(playTrack(trackArray[trackIndex + 1]))
+                addRecent(trackArray[trackIndex + 1])
                 return true;
             }
             else {
@@ -94,6 +95,7 @@ export default function FooterContent({ sidebarWidth }) {
         if(currentTrack.id !== emptySongId) {
             if (trackIndex-1 > -1 && !backward) {
                 dispatch(playTrack(trackArray[trackIndex - 1]))
+                addRecent(trackArray[trackIndex - 1])
             }
         }
     },[trackData]);
@@ -106,6 +108,7 @@ export default function FooterContent({ sidebarWidth }) {
             }
             if (shuffle) {
                 dispatch(playTrack(trackArray[randomIndex]))
+                addRecent(trackArray[randomIndex])
             }
         }
     },[currentTrack]);
