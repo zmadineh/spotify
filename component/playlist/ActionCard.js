@@ -35,7 +35,6 @@ export default function ActionCard ({music}) {
                 dispatch(playTrack(music))
         }
 
-        // dispatch(handlePlay(music))
         dispatch(addRecent(music))
     }
 

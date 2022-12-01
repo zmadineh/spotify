@@ -46,7 +46,6 @@ export default function TrackTable ({music, type}) {
         else if (track.pause || !track.playing)
             dispatch(playTrack(track))
 
-        // dispatch(handlePlay(track))
         dispatch(addRecent(track))
     }
 

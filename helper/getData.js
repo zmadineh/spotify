@@ -1,8 +1,20 @@
 import {songCategories} from "../data/music-data/song-categories.data";
+import {playlistsData} from "../data/music-data/playlists.data";
+import {trackData} from "../data/music-data/track.data";
 
 export const getCategories = () => {
     return songCategories;
 }
+
+export const getPlaylists = () => {
+    return playlistsData;
+}
+
+export const getTracks = () => {
+    return trackData;
+}
+
+
 
 export const getCategoryById = (category_id) => {
     return songCategories.find(item => item.id === category_id)

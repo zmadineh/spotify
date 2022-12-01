@@ -9,6 +9,7 @@ import ActionCard from "../../../component/playlist/ActionCard";
 import TrackTable from "../../../component/track/TrackTable";
 
 import Grid from "@mui/material/Grid";
+import {getPlaylists, getTracks} from "../../../helper/getData";
 
 export default function music () {
 
@@ -44,13 +45,16 @@ export default function music () {
 
 // // Generates `/playlist/1` and `/playlist/2`
 // export async function getStaticPaths() {
+//     // const tracks = getTracks();
+//     const playlist = getPlaylists();
+//
 //     return {
 //         paths: [{ params: { type: 'playlist', id: '1' } }, { params: { type: 'playlist',  id: '2' } }],
 //         fallback: false, // can also be true or 'blocking'
 //     }
 // }
-//
-// // `getStaticPaths` requires using `getStaticProps`
+
+// `getStaticPaths` requires using `getStaticProps`
 // export async function getStaticProps(context) {
 //     return {
 //         // Passed to the page component as props
